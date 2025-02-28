@@ -49,7 +49,7 @@ paths:
     get:
       tags:
         - Miscellaneous
-      summary: Search lemmy.
+      summary: Search PieFed.
       parameters:
         - name: Search
           in: query
@@ -338,23 +338,6 @@ paths:
                 $ref: '#/components/schemas/PostResponse'
       summary: A moderator remove for a post.
   /comment:
-    get:
-      tags:
-        - Comment
-      parameters:
-        - name: GetComment
-          in: query
-          explode: true
-          schema:
-            $ref: '#/components/schemas/GetComment'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CommentResponse'
-      summary: Get / fetch comment.
     post:
       tags:
         - Comment
@@ -563,7 +546,6 @@ paths:
     post:
       tags:
         - User
-        - Admin
       requestBody:
         content:
           application/json:
@@ -587,8 +569,8 @@ paths:
             schema:
               $ref: '#/components/schemas/Login'
       responses:
-        '201':
-          description: CREATED
+        '200':
+          description: OK
           content:
             application/json:
               schema:
@@ -1392,10 +1374,8 @@ components:
       type: object
     SearchType:
       enum:
-        - All
-        - Comments
-        - Posts
         - Communities
+        - Posts
         - Users
         - Url
       title: SearchType
@@ -1405,15 +1385,6 @@ components:
         q:
           title: Search.q
           type: string
-        community_id:
-          $ref: '#/components/schemas/CommunityId'
-          title: Search.community_id
-        community_name:
-          title: Search.community_name
-          type: string
-        creator_id:
-          $ref: '#/components/schemas/PersonId'
-          title: Search.creator_id
         type_:
           $ref: '#/components/schemas/SearchType'
           title: Search.type_
@@ -1429,9 +1400,6 @@ components:
         limit:
           title: Search.limit
           type: integer
-        post_title_only:
-          title: Search.post_title_only
-          type: boolean
       required:
         - q
       additionalProperties: false
@@ -1509,6 +1477,9 @@ components:
         saved:
           title: CommentView.saved
           type: boolean
+        activity_alert:
+          title: CommentView.activity_alert
+          type: boolean
         creator_blocked:
           title: CommentView.creator_blocked
           type: boolean
@@ -1527,31 +1498,10 @@ components:
         - creator_is_admin
         - subscribed
         - saved
+        - activity_alert
         - creator_blocked
       additionalProperties: false
       title: CommentView
-      type: object
-    ImageDetails:
-      properties:
-        link:
-          title: ImageDetails.link
-          type: string
-        width:
-          title: ImageDetails.width
-          type: integer
-        height:
-          title: ImageDetails.height
-          type: integer
-        content_type:
-          title: ImageDetails.content_type
-          type: string
-      required:
-        - link
-        - width
-        - height
-        - content_type
-      additionalProperties: false
-      title: ImageDetails
       type: object
     PostAggregates:
       properties:
@@ -1598,9 +1548,6 @@ components:
         community:
           $ref: '#/components/schemas/Community'
           title: PostView.community
-        image_details:
-          $ref: '#/components/schemas/ImageDetails'
-          title: PostView.image_details
         creator_banned_from_community:
           title: PostView.creator_banned_from_community
           type: boolean
@@ -1621,6 +1568,9 @@ components:
           title: PostView.subscribed
         saved:
           title: PostView.saved
+          type: boolean
+        activity_alert:
+          title: PostView.activity_alert
           type: boolean
         read:
           title: PostView.read
@@ -1648,6 +1598,7 @@ components:
         - counts
         - subscribed
         - saved
+        - activityalert
         - read
         - hidden
         - creator_blocked
@@ -1660,44 +1611,24 @@ components:
         community_id:
           $ref: '#/components/schemas/CommunityId'
           title: CommunityAggregates.community_id
-        subscribers:
-          title: CommunityAggregates.subscribers
+        subscriptions_count:
+          title: CommunityAggregates.subscriptions_count
           type: integer
-        posts:
-          title: CommunityAggregates.posts
+        post_count:
+          title: CommunityAggregates.post_count
           type: integer
-        comments:
-          title: CommunityAggregates.comments
+        post_reply_count:
+          title: CommunityAggregates.post_reply_count
           type: integer
         published:
           title: CommunityAggregates.published
           type: string
-        users_active_day:
-          title: CommunityAggregates.users_active_day
-          type: integer
-        users_active_week:
-          title: CommunityAggregates.users_active_week
-          type: integer
-        users_active_month:
-          title: CommunityAggregates.users_active_month
-          type: integer
-        users_active_half_year:
-          title: CommunityAggregates.users_active_half_year
-          type: integer
-        subscribers_local:
-          title: CommunityAggregates.subscribers_local
-          type: integer
       required:
         - community_id
-        - subscribers
-        - posts
-        - comments
+        - subscriptions_count
+        - post_count
+        - post_reply_count
         - published
-        - users_active_day
-        - users_active_week
-        - users_active_month
-        - users_active_half_year
-        - subscribers_local
       additionalProperties: false
       title: CommunityAggregates
       type: object
@@ -1732,11 +1663,6 @@ components:
         type_:
           $ref: '#/components/schemas/SearchType'
           title: SearchResponse.type_
-        comments:
-          items:
-            $ref: '#/components/schemas/CommentView'
-          title: SearchResponse.comments
-          type: array
         posts:
           items:
             $ref: '#/components/schemas/PostView'
@@ -2318,16 +2244,6 @@ components:
       additionalProperties: false
       title: PostReportResponse
       type: object
-    GetComment:
-      properties:
-        id:
-          $ref: '#/components/schemas/CommentId'
-          title: GetComment.id
-      required:
-        - id
-      additionalProperties: false
-      title: GetComment
-      type: object
     CommentResponse:
       properties:
         comment_view:
@@ -2897,15 +2813,6 @@ components:
         jwt:
           title: LoginResponse.jwt
           type: string
-        registration_created:
-          title: LoginResponse.registration_created
-          type: boolean
-        verify_email_sent:
-          title: LoginResponse.verify_email_sent
-          type: boolean
-      required:
-        - registration_created
-        - verify_email_sent
       additionalProperties: false
       title: LoginResponse
       type: object
@@ -2968,17 +2875,14 @@ components:
       type: object
     Login:
       properties:
-        username_or_email:
-          title: Login.username_or_email
+        username:
+          title: Login.username
           type: string
         password:
           title: Login.password
           type: string
-        totp_2fa_token:
-          title: Login.totp_2fa_token
-          type: string
       required:
-        - username_or_email
+        - username
         - password
       additionalProperties: false
       title: Login
