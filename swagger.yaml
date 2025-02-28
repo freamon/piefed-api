@@ -13,6 +13,7 @@ info:
     url: https://github.com/freamon/piefed-api
 servers:
   - url: https://preferred.social/api/alpha
+  - url: https://pythag.net/api/alpha
 security:
   - bearerAuth: []
 paths:
@@ -629,57 +630,38 @@ components:
       type: integer
     Site:
       properties:
-        id:
-          $ref: '#/components/schemas/SiteId'
-          title: Site.id
         name:
           title: Site.name
-          type: string
-        sidebar:
-          title: Site.sidebar
-          type: string
-        published:
-          title: Site.published
-          type: string
-        updated:
-          title: Site.updated
-          type: string
-        icon:
-          title: Site.icon
-          type: string
-        banner:
-          title: Site.banner
           type: string
         description:
           title: Site.description
           type: string
+        sidebar:
+          title: Site.sidebar
+          type: string
+        icon:
+          title: Site.icon
+          type: string
+        enable_downvotes:
+          title: Site.enable_downvotes
+          type: boolean
         actor_id:
           title: Site.actor_id
           type: string
-        last_refreshed_at:
-          title: Site.last_refreshed_at
-          type: string
-        inbox_url:
-          title: Site.inbox_url
-          type: string
-        public_key:
-          title: Site.public_key
-          type: string
-        instance_id:
-          $ref: '#/components/schemas/InstanceId'
-          title: Site.instance_id
-        content_warning:
-          title: Site.content_warning
-          type: string
+        user_count:
+          title: Site.user_count
+          type: integer
+        registration_mode:
+          $ref: '#/components/schemas/RegistrationMode'
+          title: Site.registration_mode
+        all_languages:
+          items:
+            $ref: '#/components/schemas/LanguageId'
+          title: Site.all_languages
+          type: array
       required:
-        - id
         - name
-        - published
         - actor_id
-        - last_refreshed_at
-        - inbox_url
-        - public_key
-        - instance_id
       additionalProperties: false
       title: Site
       type: object
@@ -690,6 +672,13 @@ components:
         - Subscribed
         - ModeratorView
       title: ListingType
+      type: string
+    RegistrationMode:
+      enum:
+        - Closed
+        - RequireApplication
+        - Open
+      title: RegistrationMode
       type: string
     PostListingMode:
       enum:
@@ -729,14 +718,8 @@ components:
         id:
           $ref: '#/components/schemas/PersonId'
           title: Person.id
-        name:
-          title: Person.name
-          type: string
-        display_name:
-          title: Person.display_name
-          type: string
-        avatar:
-          title: Person.avatar
+        user_name:
+          title: Person.user_name
           type: string
         banned:
           title: Person.banned
@@ -744,33 +727,18 @@ components:
         published:
           title: Person.published
           type: string
-        updated:
-          title: Person.updated
-          type: string
         actor_id:
           title: Person.actor_id
-          type: string
-        bio:
-          title: Person.bio
           type: string
         local:
           title: Person.local
           type: boolean
-        banner:
-          title: Person.banner
-          type: string
         deleted:
           title: Person.deleted
           type: boolean
-        matrix_user_id:
-          title: Person.matrix_user_id
-          type: string
         bot_account:
           title: Person.bot_account
           type: boolean
-        ban_expires:
-          title: Person.ban_expires
-          type: string
         instance_id:
           $ref: '#/components/schemas/InstanceId'
           title: Person.instance_id
@@ -828,36 +796,15 @@ components:
       type: integer
     LocalUser:
       properties:
-        id:
-          $ref: '#/components/schemas/LocalUserId'
-          title: LocalUser.id
-        person_id:
-          $ref: '#/components/schemas/PersonId'
-          title: LocalUser.person_id
-        email:
-          title: LocalUser.email
-          type: string
         show_nsfw:
           title: LocalUser.show_nsfw
           type: boolean
-        theme:
-          title: LocalUser.theme
-          type: string
         default_sort_type:
           $ref: '#/components/schemas/SortType'
           title: LocalUser.default_sort_type
         default_listing_type:
           $ref: '#/components/schemas/ListingType'
           title: LocalUser.default_listing_type
-        interface_language:
-          title: LocalUser.interface_language
-          type: string
-        show_avatars:
-          title: LocalUser.show_avatars
-          type: boolean
-        send_notifications_to_email:
-          title: LocalUser.send_notifications_to_email
-          type: boolean
         show_scores:
           title: LocalUser.show_scores
           type: boolean
@@ -867,104 +814,21 @@ components:
         show_read_posts:
           title: LocalUser.show_read_posts
           type: boolean
-        email_verified:
-          title: LocalUser.email_verified
-          type: boolean
-        accepted_application:
-          title: LocalUser.accepted_application
-          type: boolean
-        open_links_in_new_tab:
-          title: LocalUser.open_links_in_new_tab
-          type: boolean
-        blur_nsfw:
-          title: LocalUser.blur_nsfw
-          type: boolean
-        auto_expand:
-          title: LocalUser.auto_expand
-          type: boolean
-        infinite_scroll_enabled:
-          title: LocalUser.infinite_scroll_enabled
-          type: boolean
-        admin:
-          title: LocalUser.admin
-          type: boolean
-        post_listing_mode:
-          $ref: '#/components/schemas/PostListingMode'
-          title: LocalUser.post_listing_mode
-        totp_2fa_enabled:
-          title: LocalUser.totp_2fa_enabled
-          type: boolean
-        enable_keyboard_navigation:
-          title: LocalUser.enable_keyboard_navigation
-          type: boolean
-        enable_animated_images:
-          title: LocalUser.enable_animated_images
-          type: boolean
-        collapse_bot_comments:
-          title: LocalUser.collapse_bot_comments
-          type: boolean
       required:
-        - id
-        - person_id
         - show_nsfw
-        - theme
         - default_sort_type
         - default_listing_type
-        - interface_language
-        - show_avatars
-        - send_notifications_to_email
         - show_scores
         - show_bot_accounts
         - show_read_posts
-        - email_verified
-        - accepted_application
-        - open_links_in_new_tab
-        - blur_nsfw
-        - auto_expand
-        - infinite_scroll_enabled
-        - admin
-        - post_listing_mode
-        - totp_2fa_enabled
-        - enable_keyboard_navigation
-        - enable_animated_images
-        - collapse_bot_comments
       additionalProperties: false
       title: LocalUser
-      type: object
-    LocalUserVoteDisplayMode:
-      properties:
-        local_user_id:
-          $ref: '#/components/schemas/LocalUserId'
-          title: LocalUserVoteDisplayMode.local_user_id
-        score:
-          title: LocalUserVoteDisplayMode.score
-          type: boolean
-        upvotes:
-          title: LocalUserVoteDisplayMode.upvotes
-          type: boolean
-        downvotes:
-          title: LocalUserVoteDisplayMode.downvotes
-          type: boolean
-        upvote_percentage:
-          title: LocalUserVoteDisplayMode.upvote_percentage
-          type: boolean
-      required:
-        - local_user_id
-        - score
-        - upvotes
-        - downvotes
-        - upvote_percentage
-      additionalProperties: false
-      title: LocalUserVoteDisplayMode
       type: object
     LocalUserView:
       properties:
         local_user:
           $ref: '#/components/schemas/LocalUser'
           title: LocalUserView.local_user
-        local_user_vote_display_mode:
-          $ref: '#/components/schemas/LocalUserVoteDisplayMode'
-          title: LocalUserView.local_user_vote_display_mode
         person:
           $ref: '#/components/schemas/Person'
           title: LocalUserView.person
@@ -973,7 +837,6 @@ components:
           title: LocalUserView.counts
       required:
         - local_user
-        - local_user_vote_display_mode
         - person
         - counts
       additionalProperties: false
@@ -982,12 +845,6 @@ components:
     CommunityId:
       title: CommunityId
       type: integer
-    CommunityVisibility:
-      enum:
-        - Public
-        - LocalOnly
-      title: CommunityVisibility
-      type: string
     Community:
       properties:
         id:
@@ -1032,15 +889,12 @@ components:
         hidden:
           title: Community.hidden
           type: boolean
-        posting_restricted_to_mods:
-          title: Community.posting_restricted_to_mods
+        restricted_to_mods:
+          title: Community.restricted_to_mods
           type: boolean
         instance_id:
           $ref: '#/components/schemas/InstanceId'
           title: Community.instance_id
-        visibility:
-          $ref: '#/components/schemas/CommunityVisibility'
-          title: Community.visibility
       required:
         - id
         - name
@@ -1052,9 +906,8 @@ components:
         - actor_id
         - local
         - hidden
-        - posting_restricted_to_mods
+        - restricted_to_mods
         - instance_id
-        - visibility
       additionalProperties: false
       title: Community
       type: object
@@ -1215,6 +1068,9 @@ components:
         my_user:
           $ref: '#/components/schemas/MyUserInfo'
           title: GetSiteResponse.my_user
+        site:
+          $ref: '#/components/schemas/Site'
+          title: GetSiteResponse.site
       required:
         - version
       additionalProperties: false
@@ -1231,8 +1087,8 @@ components:
         id:
           $ref: '#/components/schemas/PostId'
           title: Post.id
-        name:
-          title: Post.name
+        title:
+          title: Post.title
           type: string
         url:
           title: Post.url
@@ -1264,12 +1120,6 @@ components:
         nsfw:
           title: Post.nsfw
           type: boolean
-        embed_title:
-          title: Post.embed_title
-          type: string
-        embed_description:
-          title: Post.embed_description
-          type: string
         thumbnail_url:
           title: Post.thumbnail_url
           type: string
@@ -1279,27 +1129,18 @@ components:
         local:
           title: Post.local
           type: boolean
-        embed_video_url:
-          title: Post.embed_video_url
-          type: string
         language_id:
           $ref: '#/components/schemas/LanguageId'
           title: Post.language_id
-        featured_community:
-          title: Post.featured_community
+        sticky:
+          title: Post.sticky
           type: boolean
-        featured_local:
-          title: Post.featured_local
-          type: boolean
-        url_content_type:
-          title: Post.url_content_type
-          type: string
         alt_text:
           title: Post.alt_text
           type: string
       required:
         - id
-        - name
+        - title
         - creator_id
         - community_id
         - removed
@@ -1310,8 +1151,7 @@ components:
         - ap_id
         - local
         - language_id
-        - featured_community
-        - featured_local
+        - sticky
       additionalProperties: false
       title: Post
       type: object
@@ -2929,9 +2769,4 @@ components:
       additionalProperties: false
       title: BlockInstanceResponse
       type: object
-    
-    
-    
-    
-    
     
