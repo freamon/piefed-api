@@ -670,7 +670,7 @@ components:
         - All
         - Local
         - Subscribed
-        - ModeratorView
+        - Popular
       title: ListingType
       type: string
     RegistrationMode:
@@ -692,22 +692,7 @@ components:
         - Active
         - Hot
         - New
-        - Old
-        - TopDay
-        - TopWeek
-        - TopMonth
-        - TopYear
-        - TopAll
-        - MostComments
-        - NewComments
-        - TopHour
-        - TopSixHour
-        - TopTwelveHour
-        - TopThreeMonths
-        - TopSixMonths
-        - TopNineMonths
-        - Controversial
-        - Scaled
+        - Top
       title: SortType
       type: string
     PersonId:
@@ -2770,3 +2755,5 @@ components:
       title: BlockInstanceResponse
       type: object
     
+    
+  
