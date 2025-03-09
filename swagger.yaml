@@ -1915,7 +1915,7 @@ components:
         post_id:
           $ref: '#/components/schemas/PostId'
           title: SubscribePost.post_id
-        save:
+        subscribe:
           title: SubscribePost.subscribe
           type: boolean
       required:
@@ -2341,7 +2341,7 @@ components:
         comment_id:
           $ref: '#/components/schemas/CommentId'
           title: SubscribeComment.comment_id
-        save:
+        subscribe:
           title: SubscribeComment.subscribe
           type: boolean
       required:
