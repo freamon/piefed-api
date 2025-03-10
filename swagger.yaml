@@ -769,10 +769,14 @@ components:
         is_admin:
           title: PersonView.is_admin
           type: boolean
+        activity_alert:
+          title: PersonView.activity_alert
+          type: boolean
       required:
         - person
         - counts
         - is_admin
+        - activity_alert
       additionalProperties: false
       title: PersonView
       type: object
@@ -1474,12 +1478,16 @@ components:
         banned_from_community:
           title: CommunityView.banned_from_community
           type: boolean
+        activity_alert:
+          title: PersonView.activity_alert
+          type: boolean
       required:
         - community
         - subscribed
         - blocked
         - counts
         - banned_from_community
+        - activity_alert
       additionalProperties: false
       title: CommunityView
       type: object
