@@ -1479,7 +1479,7 @@ components:
           title: CommunityView.banned_from_community
           type: boolean
         activity_alert:
-          title: PersonView.activity_alert
+          title: CommunityView.activity_alert
           type: boolean
       required:
         - community
