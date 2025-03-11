@@ -1759,9 +1759,6 @@ components:
       additionalProperties: false
       title: CreatePost
       type: object
-    PaginationCursor:
-      title: PaginationCursor
-      type: string
     GetPosts:
       properties:
         type_:
@@ -1779,30 +1776,12 @@ components:
         community_id:
           $ref: '#/components/schemas/CommunityId'
           title: GetPosts.community_id
+        person_id:
+          $ref: '#/components/schemas/PersonId'
+          title: GetPosts.person_id
         community_name:
           title: GetPosts.community_name
           type: string
-        saved_only:
-          title: GetPosts.saved_only
-          type: boolean
-        liked_only:
-          title: GetPosts.liked_only
-          type: boolean
-        disliked_only:
-          title: GetPosts.disliked_only
-          type: boolean
-        show_hidden:
-          title: GetPosts.show_hidden
-          type: boolean
-        show_read:
-          title: GetPosts.show_read
-          type: boolean
-        show_nsfw:
-          title: GetPosts.show_nsfw
-          type: boolean
-        page_cursor:
-          $ref: '#/components/schemas/PaginationCursor'
-          title: GetPosts.page_cursor
       additionalProperties: false
       title: GetPosts
       type: object
@@ -1813,9 +1792,6 @@ components:
             $ref: '#/components/schemas/PostView'
           title: GetPostsResponse.posts
           type: array
-        next_page:
-          $ref: '#/components/schemas/PaginationCursor'
-          title: GetPostsResponse.next_page
       required:
         - posts
       additionalProperties: false
