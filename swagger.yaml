@@ -1688,8 +1688,8 @@ components:
         post_id:
           $ref: '#/components/schemas/PostId'
           title: EditPost.post_id
-        name:
-          title: EditPost.name
+        title:
+          title: EditPost.title
           type: string
         url:
           title: EditPost.url
@@ -1697,18 +1697,12 @@ components:
         body:
           title: EditPost.body
           type: string
-        alt_text:
-          title: EditPost.alt_text
-          type: string
         nsfw:
           title: EditPost.nsfw
           type: boolean
         language_id:
           $ref: '#/components/schemas/LanguageId'
           title: EditPost.language_id
-        custom_thumbnail:
-          title: EditPost.custom_thumbnail
-          type: string
       required:
         - post_id
       additionalProperties: false
@@ -1726,8 +1720,8 @@ components:
       type: object
     CreatePost:
       properties:
-        name:
-          title: CreatePost.name
+        title:
+          title: CreatePost.title
           type: string
         community_id:
           $ref: '#/components/schemas/CommunityId'
@@ -1738,23 +1732,14 @@ components:
         body:
           title: CreatePost.body
           type: string
-        alt_text:
-          title: CreatePost.alt_text
-          type: string
-        honeypot:
-          title: CreatePost.honeypot
-          type: string
         nsfw:
           title: CreatePost.nsfw
           type: boolean
         language_id:
           $ref: '#/components/schemas/LanguageId'
           title: CreatePost.language_id
-        custom_thumbnail:
-          title: CreatePost.custom_thumbnail
-          type: string
       required:
-        - name
+        - title
         - community_id
       additionalProperties: false
       title: CreatePost
@@ -2739,5 +2724,3 @@ components:
       title: BlockInstanceResponse
       type: object
     
-    
-  
