@@ -82,6 +82,22 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetCommunityResponse'
       summary: Get / fetch a community.
+    post:
+      tags:
+        - Community
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCommunity'
+      responses:
+        '201':
+          description: CREATED
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunityResponse'
+      summary: Create a new community.
   /community/list:
     get:
       tags:
@@ -899,6 +915,46 @@ components:
         - instance_id
       additionalProperties: false
       title: Community
+      type: object
+    CreateCommunity:
+      properties:
+        name:
+          title: CreateCommunity.name
+          type: string
+        title:
+          title: CreateCommunity.title
+          type: string
+        description:
+          title: CreateCommunity.description
+          type: string
+        rules:
+          title: CreateCommunity.rules
+          type: string
+        icon_url:
+          title: CreateCommunity.icon
+          type: string
+        banner_url:
+          title: CreateCommunity.banner
+          type: string
+        nsfw:
+          title: CreateCommunity.nsfw
+          type: boolean
+        restricted_to_mods:
+          title: CreateCommunity.restricted_to_mods
+          type: boolean
+        local_only:
+          title: CreateCommunity.local_only
+          type: boolean
+        discussion_languages:
+          items:
+            $ref: '#/components/schemas/LanguageId'
+          title: CreateCommunity.discussion_languages
+          type: array
+      required:
+        - name
+        - title
+      additionalProperties: false
+      title: CreateCommunity
       type: object
     CommunityFollowerView:
       properties:
@@ -2724,3 +2780,5 @@ components:
       title: BlockInstanceResponse
       type: object
     
+    
+  
