@@ -737,6 +737,7 @@ components:
         - Local
         - Subscribed
         - Popular
+        - ModeratorView
       title: ListingType
       type: string
     RegistrationMode:
@@ -1926,6 +1927,9 @@ components:
         community_name:
           title: GetPosts.community_name
           type: string
+        liked_only:
+          title: GetPosts.liked_only
+          type: boolean
       additionalProperties: false
       title: GetPosts
       type: object
