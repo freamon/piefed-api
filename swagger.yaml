@@ -2769,7 +2769,7 @@ components:
       required:
         - person_view
       additionalProperties: false
-      title: BlockPersonResponse
+      title: PersonResponse
       type: object
     LoginResponse:
       properties:
