@@ -166,6 +166,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/BlockCommunityResponse'
       summary: Block a community.
+  /community/subscribe:
+    put:
+      tags:
+        - Community
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscribeCommunity'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunityResponse'
+      summary: Subscribe to activities in a community.
   /post/list:
     get:
       tags:
@@ -640,6 +657,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetUnreadCountResponse'
       summary: Get your unread counts
+  /user/subscribe:
+    put:
+      tags:
+        - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscribePerson'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonResponse'
+      summary: Subscribe to activities from another user
   
 components:
   securitySchemes:
@@ -1794,6 +1828,20 @@ components:
       additionalProperties: false
       title: GetPostResponse
       type: object
+    SubscribeCommunity:
+      properties:
+        community_id:
+          $ref: '#/components/schemas/CommunityId'
+          title: SubscribeCommunity.community_id
+        subscribe:
+          title: SubscribeCommunity.subscribe
+          type: boolean
+      required:
+        - community_id
+        - subscribe
+      additionalProperties: false
+      title: SubscribeCommunity
+      type: object
     EditPost:
       properties:
         post_id:
@@ -2002,7 +2050,7 @@ components:
         - post_id
         - subscribe
       additionalProperties: false
-      title: SavePost
+      title: SubscribePost
       type: object
     CreatePostReport:
       properties:
@@ -2713,6 +2761,16 @@ components:
       additionalProperties: false
       title: GetPersonDetailsResponse
       type: object
+    PersonResponse:
+      properties:
+        person_view:
+          $ref: '#/components/schemas/PersonView'
+          title: PersonResponse.person_view
+      required:
+        - person_view
+      additionalProperties: false
+      title: BlockPersonResponse
+      type: object
     LoginResponse:
       properties:
         jwt:
@@ -2834,6 +2892,19 @@ components:
       additionalProperties: false
       title: BlockInstanceResponse
       type: object
-    
+    SubscribePerson:
+      properties:
+        person_id:
+          $ref: '#/components/schemas/PersonId'
+          title: SubscribePerson.person_id
+        subscribe:
+          title: SubscribePerson.subscribe
+          type: boolean
+      required:
+        - person_id
+        - subscribe
+      additionalProperties: false
+      title: SubscribePerson
+      type: object
     
   
