@@ -148,7 +148,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommunityResponse'
-      summary: Follow / subscribe to a community.
+      summary: Follow / join a community.
   /community/block:
     post:
       tags:
