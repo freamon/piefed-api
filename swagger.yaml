@@ -2258,15 +2258,10 @@ components:
         - Hot
         - Top
         - New
-        - Old
-        - Controversial
       title: CommentSortType
       type: string
     GetComments:
       properties:
-        type_:
-          $ref: '#/components/schemas/ListingType'
-          title: GetComments.type_
         sort:
           $ref: '#/components/schemas/CommentSortType'
           title: GetComments.sort
@@ -2291,15 +2286,6 @@ components:
         parent_id:
           $ref: '#/components/schemas/CommentId'
           title: GetComments.parent_id
-        saved_only:
-          title: GetComments.saved_only
-          type: boolean
-        liked_only:
-          title: GetComments.liked_only
-          type: boolean
-        disliked_only:
-          title: GetComments.disliked_only
-          type: boolean
       additionalProperties: false
       title: GetComments
       type: object
