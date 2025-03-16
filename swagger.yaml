@@ -982,6 +982,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponse'
         '400':
           description: The uploaded image was missing or invalid
           content:
@@ -1011,6 +1015,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponse'
         '400':
           description: The uploaded image was missing or invalid
           content:
@@ -1040,6 +1048,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadResponse'
         '400':
           description: The uploaded image was missing or invalid
           content:
@@ -3326,6 +3338,14 @@ components:
         error:
           type: string
           example: An error occurred
+      type: object
+    UploadResponse:
+      required:
+        - url
+      properties:
+        url:
+          type: string
+          example: https://preferred.social/static/media/image.png
       type: object
     
   
