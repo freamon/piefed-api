@@ -29,6 +29,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetSiteResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
   /site/block:
     post:
       tags:
@@ -45,6 +51,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BlockInstanceResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Block an instance.
   /search:
     get:
@@ -64,6 +76,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SearchResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
   /community:
     get:
       tags:
@@ -81,6 +99,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetCommunityResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Get / fetch a community.
     post:
       tags:
@@ -97,6 +121,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommunityResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '429':
+          description: You are being rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Create a new community.
     put:
       tags:
@@ -113,6 +149,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommunityResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Edit community.
   /community/delete:
     post:
@@ -130,6 +172,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommunityResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Delete a community.
   /community/list:
     get:
@@ -148,6 +196,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ListCommunitiesResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: List communities, with various filters.
   /community/follow:
     post:
@@ -165,6 +219,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommunityResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Follow / subscribe to a community.
   /community/block:
     post:
@@ -176,12 +236,18 @@ paths:
             schema:
               $ref: '#/components/schemas/BlockCommunity'
       responses:
-        '201':
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/BlockCommunityResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Block a community.
   /community/subscribe:
     put:
@@ -199,6 +265,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommunityResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Subscribe to activities in a community.
   /post/list:
     get:
@@ -217,6 +289,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetPostsResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Get / fetch posts, with various filters.
   /post:
     get:
@@ -235,6 +313,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetPostResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Get / fetch a post.
     put:
       tags:
@@ -251,6 +335,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Edit a post.
     post:
       tags:
@@ -261,12 +351,24 @@ paths:
             schema:
               $ref: '#/components/schemas/CreatePost'
       responses:
-        '201':
-          description: Created
+        '200':
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '429':
+          description: You are being rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Create a post.
   /post/like:
     post:
@@ -278,12 +380,18 @@ paths:
             schema:
               $ref: '#/components/schemas/CreatePostLike'
       responses:
-        '201':
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Like / vote on a post.
   /post/save:
     put:
@@ -301,6 +409,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Save a post.
   /post/subscribe:
     put:
@@ -318,6 +432,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Subscribe to a post.
   /post/delete:
     post:
@@ -329,12 +449,18 @@ paths:
             schema:
               $ref: '#/components/schemas/DeletePost'
       responses:
-        '201':
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Delete a post.
   /post/report:
     post:
@@ -346,12 +472,18 @@ paths:
             schema:
               $ref: '#/components/schemas/CreatePostReport'
       responses:
-        '201':
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostReportResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Report a post.
   /post/lock:
     post:
@@ -363,12 +495,18 @@ paths:
             schema:
               $ref: '#/components/schemas/LockPost'
       responses:
-        '201':
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: A moderator can lock a post ( IE disable new comments ).
   /post/feature:
     post:
@@ -380,12 +518,18 @@ paths:
             schema:
               $ref: '#/components/schemas/FeaturePost'
       responses:
-        '201':
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: A moderator can feature a community post ( IE stick it to the top of a community ).
   /post/remove:
     post:
@@ -397,12 +541,18 @@ paths:
             schema:
               $ref: '#/components/schemas/RemovePost'
       responses:
-        '201':
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/PostResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: A moderator remove for a post.
   /comment:
     post:
@@ -420,6 +570,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommentResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '429':
+          description: You are being rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Create a comment.
     put:
       tags:
@@ -436,6 +598,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommentResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Edit a comment.
     get:
       tags:
@@ -452,6 +620,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommentResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Get / fetch a comment.
   /comment/list:
     get:
@@ -469,6 +643,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetCommentsResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Get / fetch comments.
   /comment/delete:
     post:
@@ -486,6 +666,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommentResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Delete a comment.
   /comment/remove:
     post:
@@ -503,6 +689,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommentResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: A moderator remove for a comment.
   /comment/like:
     post:
@@ -514,12 +706,18 @@ paths:
             schema:
               $ref: '#/components/schemas/CreateCommentLike'
       responses:
-        '201':
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommentResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Like / vote on a comment.
   /comment/save:
     put:
@@ -537,6 +735,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommentResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Save a comment.
   /comment/subscribe:
     put:
@@ -554,6 +758,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommentResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Subscribe to a comment.
   /comment/report:
     post:
@@ -565,12 +775,18 @@ paths:
             schema:
               $ref: '#/components/schemas/CreateCommentReport'
       responses:
-        '201':
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommentReportResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Report a comment.
   /private_message/list:
     get:
@@ -588,6 +804,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PrivateMessagesResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Get / fetch private messages.
   /user:
     get:
@@ -606,6 +828,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetPersonDetailsResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Get the details for a person.
   /user/replies:
     get:
@@ -624,6 +852,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetRepliesResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Get comment replies.
   /user/block:
     post:
@@ -635,12 +869,18 @@ paths:
             schema:
               $ref: '#/components/schemas/BlockPerson'
       responses:
-        '201':
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/BlockPersonResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Block a person.
   /user/login:
     post:
@@ -671,12 +911,18 @@ paths:
         - User
       operationId: markAllAsRead
       responses:
-        '201':
-          description: CREATED
+        '200':
+          description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetRepliesResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Mark all replies as read.
   /user/unread_count:
     get:
@@ -689,6 +935,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetUnreadCountResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Get your unread counts
   /user/subscribe:
     put:
@@ -706,8 +958,100 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PersonResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
       summary: Subscribe to activities from another user
-  
+  /upload/image:
+    post:
+      tags:
+        - Upload
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ImageUpload'
+            encoding:
+              file:
+                contentType: >-
+                  image/jpeg, image/jpg, image/gif, image/png, image/jxl,
+                  image/heic, image/heif, image/webp, image/avif
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: The uploaded image was missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '429':
+          description: You are being rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+  /upload/community_image:
+    post:
+      tags:
+        - Upload
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ImageUpload'
+            encoding:
+              file:
+                contentType: >-
+                  image/jpeg, image/jpg, image/gif, image/png, image/jxl,
+                  image/heic, image/heif, image/webp, image/avif
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: The uploaded image was missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '429':
+          description: You are being rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+  /upload/user_image:
+    post:
+      tags:
+        - Upload
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ImageUpload'
+            encoding:
+              file:
+                contentType: >-
+                  image/jpeg, image/jpg, image/gif, image/png, image/jxl,
+                  image/heic, image/heif, image/webp, image/avif
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: The uploaded image was missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '429':
+          description: You are being rate limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
 components:
   securitySchemes:
     bearerAuth:
@@ -2966,6 +3310,22 @@ components:
         - subscribe
       additionalProperties: false
       title: SubscribePerson
+      type: object
+    ImageUpload:
+      required:
+        - file
+      properties:
+        file:
+          type: string
+          format: binary
+      type: object
+    BadRequest:
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          example: An error occurred
       type: object
     
   
