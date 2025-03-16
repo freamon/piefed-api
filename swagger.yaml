@@ -114,6 +114,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/CommunityResponse'
       summary: Edit community.
+  /community/delete:
+    post:
+      tags:
+        - Community
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeleteCommunity'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommunityResponse'
+      summary: Delete a community.
   /community/list:
     get:
       tags:
@@ -148,7 +165,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CommunityResponse'
-      summary: Follow / join a community.
+      summary: Follow / subscribe to a community.
   /community/block:
     post:
       tags:
@@ -761,6 +778,12 @@ components:
         - New
         - Top
       title: SortType
+      type: string
+    CommunitySortType:
+      enum:
+        - Active
+        - New
+      title: CommunitySortType
       type: string
     PersonId:
       title: PersonId
@@ -1724,7 +1747,7 @@ components:
           $ref: '#/components/schemas/ListingType'
           title: ListCommunities.type_
         sort:
-          $ref: '#/components/schemas/SortType'
+          $ref: '#/components/schemas/CommunitySortType'
           title: ListCommunities.sort
         show_nsfw:
           title: ListCommunities.show_nsfw
@@ -1791,6 +1814,20 @@ components:
         - blocked
       additionalProperties: false
       title: BlockCommunityResponse
+      type: object
+    DeleteCommunity:
+      properties:
+        community_id:
+          $ref: '#/components/schemas/CommunityId'
+          title: DeleteCommunity.community_id
+        deleted:
+          title: DeleteCommunity.deleted
+          type: boolean
+      required:
+        - community_id
+        - deleted
+      additionalProperties: false
+      title: DeleteCommunity
       type: object
     GetPost:
       properties:
@@ -2258,10 +2295,15 @@ components:
         - Hot
         - Top
         - New
+        - Old
+        - Controversial
       title: CommentSortType
       type: string
     GetComments:
       properties:
+        type_:
+          $ref: '#/components/schemas/ListingType'
+          title: GetComments.type_
         sort:
           $ref: '#/components/schemas/CommentSortType'
           title: GetComments.sort
@@ -2286,6 +2328,15 @@ components:
         parent_id:
           $ref: '#/components/schemas/CommentId'
           title: GetComments.parent_id
+        saved_only:
+          title: GetComments.saved_only
+          type: boolean
+        liked_only:
+          title: GetComments.liked_only
+          type: boolean
+        disliked_only:
+          title: GetComments.disliked_only
+          type: boolean
       additionalProperties: false
       title: GetComments
       type: object
