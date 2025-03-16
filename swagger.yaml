@@ -437,6 +437,22 @@ paths:
               schema:
                 $ref: '#/components/schemas/CommentResponse'
       summary: Edit a comment.
+    get:
+      tags:
+        - Comment
+      parameters:
+        - in: query
+          name: GetComments
+          schema:
+            $ref: '#/components/schemas/GetComment'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentResponse'
+      summary: Get / fetch a comment.
   /comment/list:
     get:
       tags:
@@ -2243,14 +2259,8 @@ components:
         comment_view:
           $ref: '#/components/schemas/CommentView'
           title: CommentResponse.comment_view
-        recipient_ids:
-          items:
-            $ref: '#/components/schemas/LocalUserId'
-          title: CommentResponse.recipient_ids
-          type: array
       required:
         - comment_view
-        - recipient_ids
       additionalProperties: false
       title: CommentResponse
       type: object
@@ -2299,6 +2309,16 @@ components:
         - Controversial
       title: CommentSortType
       type: string
+    GetComment:
+      properties:
+        id:
+          $ref: '#/components/schemas/CommentId'
+          title: GetComment.id
+      required:
+        - id
+      additionalProperties: false
+      title: GetComment
+      type: object
     GetComments:
       properties:
         type_:
