@@ -2704,15 +2704,6 @@ components:
         parent_id:
           $ref: '#/components/schemas/CommentId'
           title: GetComments.parent_id
-        saved_only:
-          title: GetComments.saved_only
-          type: boolean
-        liked_only:
-          title: GetComments.liked_only
-          type: boolean
-        disliked_only:
-          title: GetComments.disliked_only
-          type: boolean
       additionalProperties: false
       title: GetComments
       type: object
@@ -3141,9 +3132,6 @@ components:
         community_id:
           $ref: '#/components/schemas/CommunityId'
           title: GetPersonDetails.community_id
-        saved_only:
-          title: GetPersonDetails.saved_only
-          type: boolean
       additionalProperties: false
       title: GetPersonDetails
       type: object
