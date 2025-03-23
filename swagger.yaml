@@ -1136,19 +1136,13 @@ components:
         - Open
       title: RegistrationMode
       type: string
-    PostListingMode:
-      enum:
-        - List
-        - Card
-        - SmallCard
-      title: PostListingMode
-      type: string
     SortType:
       enum:
         - Active
         - Hot
         - New
         - Top
+        - Scaled
       title: SortType
       type: string
     CommunitySortType:
