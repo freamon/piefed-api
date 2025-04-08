@@ -965,6 +965,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequest'
       summary: Subscribe to activities from another user
+  /user/save_user_settings:
+    put:
+      tags:
+        - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SaveUserSettings'
+      responses:
+        '200':
+          description: OK
+      summary: Save your user settings.
   /upload/image:
     post:
       tags:
@@ -1136,13 +1149,19 @@ components:
         - Open
       title: RegistrationMode
       type: string
+    PostListingMode:
+      enum:
+        - List
+        - Card
+        - SmallCard
+      title: PostListingMode
+      type: string
     SortType:
       enum:
         - Active
         - Hot
         - New
         - Top
-        - Scaled
       title: SortType
       type: string
     CommunitySortType:
@@ -2698,6 +2717,15 @@ components:
         parent_id:
           $ref: '#/components/schemas/CommentId'
           title: GetComments.parent_id
+        saved_only:
+          title: GetComments.saved_only
+          type: boolean
+        liked_only:
+          title: GetComments.liked_only
+          type: boolean
+        disliked_only:
+          title: GetComments.disliked_only
+          type: boolean
       additionalProperties: false
       title: GetComments
       type: object
@@ -3126,6 +3154,9 @@ components:
         community_id:
           $ref: '#/components/schemas/CommunityId'
           title: GetPersonDetails.community_id
+        saved_only:
+          title: GetPersonDetails.saved_only
+          type: boolean
       additionalProperties: false
       title: GetPersonDetails
       type: object
@@ -3267,6 +3298,17 @@ components:
       additionalProperties: false
       title: GetUnreadCountResponse
       type: object
+    SaveUserSettings:
+      properties:
+        show_nsfw:
+          title: SaveUserSettings.show_nsfw
+          type: boolean
+        show_read_posts:
+          title: SaveUserSettings.show_read_posts
+          type: boolean
+        bio:
+          title: SaveUserSettings.bio
+          type: string
     BlockInstance:
       properties:
         instance_id:
