@@ -978,6 +978,56 @@ paths:
         '200':
           description: OK
       summary: Save your user settings.
+  /user/notifications/{status}:
+    get:
+      parameters:
+        - in: path 
+          name: status
+          required: true
+          schema:
+            type: string
+            enum:
+              - all
+              - new
+              - read
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationsResponse'          
+      summary: Get your user notifications
+  /user/notifications/{notif_id}/{read_status}:
+    put:
+      parameters:
+        - in: path
+          name: notif_id
+          required: true
+          schema:
+            type: integer
+            example: 1234
+        - in: path
+          name: read_status
+          required: true
+          schema: 
+            type: string
+            enum:
+              - read
+              - unread
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationsReadStatusResponse'
+      summary: Set the read status of a given notification.
+      
   /upload/image:
     post:
       tags:
@@ -3365,5 +3415,343 @@ components:
           type: string
           example: https://preferred.social/static/media/image.png
       type: object
-    
+    NotificationsResponse:
+      properties:
+        counts:
+          title: NotificationsResponse.counts
+          type: object
+          $ref: '#/components/schemas/NotificationsCountsView' 
+        items:
+          title: NotificationsResponse.items
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/NotificationsItemUserView'
+            - $ref: '#/components/schemas/NotificationsItemCommunityView'
+            - $ref: '#/components/schemas/NotificationsItemTopicView'
+            - $ref: '#/components/schemas/NotificationsItemPostView'
+            - $ref: '#/components/schemas/NotificationsItemReplyView'
+            - $ref: '#/components/schemas/NotificationsItemFeedView'
+            - $ref: '#/components/schemas/NotificationsItemPostMentionView'
+            - $ref: '#/components/schemas/NotificationsItemCommentMentionView' 
+        status:
+          title: NotificationsResponse.status
+          type: string
+          example: new
+        user:
+          title: NotificationsResponse.user
+          type: string
+          example: MyPieFedUserName
+      required:
+        - counts
+        - items
+        - status
+        - user
+      title: NotificationsResponse
+      type: object
+    NotificationsCountsView:
+      properties:
+        new_notifications:
+          title: NotificationsCountsView.new_notifications
+          type: integer
+        read_notifications:
+          title: NotificationsCountsView.read_notifications
+          type: integer
+        total_notifications:
+          title: NotificationsCountsView.total_notifications
+          type: integer
+      required:
+        - new_notifications
+        - read_notifications
+        - all_notifications
+      title: NotificationsCountsView
+      type: object
+    NotificationsItemUserView:
+      properties:
+        notif_id:
+          title: NotificationsItemUserView.notif_id
+          type: integer
+          example: 1234
+        notif_type:
+          title: NotificationsItemUserView.notif_type
+          type: integer
+          example: 0
+        notif_subtype:
+          title: NotificationsItemUserView.notif_subtype
+          type: string
+          example: new_post_from_followed_user
+        author:
+          title: NotificationsItemUserView.author
+          type: object
+          $ref: '#/components/schemas/Person'
+        post:
+          title: NotificationsItemUserView.post
+          type: object
+          $ref: '#/components/schemas/PostView'
+        post_id:
+          title: NotificationsItemUserView.post_id
+          type: integer
+          example: 1234
+        notif_body:
+          title: NotificationsItemUserView.notif_body
+          type: string
+          example: "This is the body of a post."
+      title: NotificationsItemUserView
+      type: object
+    NotificationsItemCommunityView:
+      properties:
+        notif_id:
+          title: NotificationsItemCommunityView.notif_id
+          type: integer
+          example: 1234
+        notif_type:
+          title: NotificationsItemCommunityView.notif_type
+          type: integer
+          example: 1
+        notif_subtype:
+          title: NotificationsItemCommunityView.notif_subtype
+          type: string
+          example: new_post_in_followed_community
+        author:
+          title: NotificationsItemCommunityView.author
+          type: object
+          $ref: '#/components/schemas/Person'
+        post:
+          title: NotificationsItemCommunityView.post
+          type: object
+          $ref: '#/components/schemas/PostView'
+        post_id:
+          title: NotificationsItemCommunityView.post_id
+          type: integer
+          example: 1234
+        community:
+          title: NotificationsItemCommunityView.community
+          type: object
+          $ref: '#/components/schemas/CommunityView'
+        notif_body:
+          title: NotificationsItemCommunityView.notif_body
+          type: string
+          example: "This is the body of a post."
+      title: NotificationsItemCommunityView
+      type: object
+    NotificationsItemTopicView:
+      properties:
+        notif_id:
+          title: NotificationsItemTopicView.notif_id
+          type: integer
+          example: 1234
+        notif_type:
+          title: NotificationsItemTopicView.notif_type
+          type: integer
+          example: 2
+        notif_subtype:
+          title: NotificationsItemTopicView.notif_subtype
+          type: string
+          example: new_post_in_followed_topic
+        author:
+          title: NotificationsItemTopicView.author
+          type: object
+          $ref: '#/components/schemas/Person'
+        post:
+          title: NotificationsItemTopicView.post
+          type: object
+          $ref: '#/components/schemas/PostView'
+        post_id:
+          title: NotificationsItemTopicView.post_id
+          type: integer
+          example: 1234
+        notif_body:
+          title: NotificationsItemTopicView.notif_body
+          type: string
+          example: "This is the body of a post."
+      title: NotificationsItemTopicView
+      type: object
+    NotificationsItemPostView:
+      properties:
+        notif_id:
+          title: NotificationsItemPostView.notif_id
+          type: integer
+          example: 1234
+        notif_type:
+          title: NotificationsItemPostView.notif_type
+          type: integer
+          example: 3
+        notif_subtype:
+          title: NotificationsItemPostView.notif_subtype
+          type: string
+          example: top_level_comment_on_followed_post
+        author:
+          title: NotificationsItemPostView.author
+          type: object
+          $ref: '#/components/schemas/Person'
+        post:
+          title: NotificationsItemPostView.post
+          type: object
+          $ref: '#/components/schemas/PostView'
+        post_id:
+          title: NotificationsItemPostView.post_id
+          type: integer
+          example: 1234
+        comment:
+          title: NotificationsItemPostView.comment
+          type: object
+          $ref: '#/components/schemas/Comment'
+        comment_id:
+          title: NotificationsItemPostView.comment_id
+          type: integer
+          example: 1234          
+        notif_body:
+          title: NotificationsItemPostView.notif_body
+          type: string
+          example: "This is the body of a comment."
+      title: NotificationsItemPostView
+      type: object
+    NotificationsItemReplyView:
+      properties:
+        notif_id:
+          title: NotificationsItemReplyView.notif_id
+          type: integer
+          example: 1234
+        notif_type:
+          title: NotificationsItemReplyView.notif_type
+          type: integer
+          example: 4
+        notif_subtype:
+          title: NotificationsItemReplyView.notif_subtype
+          type: string
+          example: new_reply_on_followed_comment
+        author:
+          title: NotificationsItemReplyView.author
+          type: object
+          $ref: '#/components/schemas/Person'
+        post:
+          title: NotificationsItemReplyView.post
+          type: object
+          $ref: '#/components/schemas/PostView'
+        post_id:
+          title: NotificationsItemReplyView.post_id
+          type: integer
+          example: 1234
+        comment:
+          title: NotificationsItemReplyView.comment
+          type: object
+          $ref: '#/components/schemas/Comment'
+        comment_id:
+          title: NotificationsItemReplyView.comment_id
+          type: integer
+          example: 1234          
+        notif_body:
+          title: NotificationsItemReplyView.notif_body
+          type: string
+          example: "This is the body of a comment."
+      title: NotificationsItemReplyView
+      type: object
+    NotificationsItemFeedView:
+      properties:
+        notif_id:
+          title: NotificationsItemFeedView.notif_id
+          type: integer
+          example: 1234
+        notif_type:
+          title: NotificationsItemFeedView.notif_type
+          type: integer
+          example: 5
+        notif_subtype:
+          title: NotificationsItemFeedView.notif_subtype
+          type: string
+          example: new_post_in_followed_feed
+        author:
+          title: NotificationsItemFeedView.author
+          type: object
+          $ref: '#/components/schemas/Person'
+        post:
+          title: NotificationsItemFeedView.post
+          type: object
+          $ref: '#/components/schemas/PostView'
+        post_id:
+          title: NotificationsItemFeedView.post_id
+          type: integer
+          example: 1234
+        notif_body:
+          title: NotificationsItemFeedView.notif_body
+          type: string
+          example: "This is the body of a post."
+      title: NotificationsItemFeedView
+      type: object
+    NotificationsItemPostMentionView:
+      properties:
+        notif_id:
+          title: NotificationsItemPostMentionView.notif_id
+          type: integer
+          example: 1234
+        notif_type:
+          title: NotificationsItemPostMentionView.notif_type
+          type: integer
+          example: 6
+        notif_subtype:
+          title: NotificationsItemPostMentionView.notif_subtype
+          type: string
+          example: post_mention
+        author:
+          title: NotificationsItemPostMentionView.author
+          type: object
+          $ref: '#/components/schemas/Person'
+        post:
+          title: NotificationsItemPostMentionView.post
+          type: object
+          $ref: '#/components/schemas/PostView'
+        post_id:
+          title: NotificationsItemPostMentionView.post_id
+          type: integer
+          example: 1234
+        notif_body:
+          title: NotificationsItemPostMentionView.notif_body
+          type: string
+          example: "This is the body of a post."
+      title: NotificationsItemPostMentionView
+      type: object
+    NotificationsItemCommentMentionView:
+      properties:
+        notif_id:
+          title: NotificationsItemCommentMentionView.notif_id
+          type: integer
+          example: 1234
+        notif_type:
+          title: NotificationsItemCommentMentionView.notif_type
+          type: integer
+          example: 6
+        notif_subtype:
+          title: NotificationsItemCommentMentionView.notif_subtype
+          type: string
+          example: comment_mention
+        author:
+          title: NotificationsItemCommentMentionView.author
+          type: object
+          $ref: '#/components/schemas/Person'
+        comment:
+          title: NotificationsItemCommentMentionView.comment
+          type: object
+          $ref: '#/components/schemas/Comment'
+        comment_id:
+          title: NotificationsItemCommentMentionView.comment_id
+          type: integer
+          example: 1234    
+        notif_body:
+          title: NotificationsItemCommentMentionView.notif_body
+          type: string
+          example: "This is the body of a comment."
+      title: NotificationsItemCommentMentionView
+      type: object
+    NotificationsReadStatusResponse:
+      title: NotificationsReadStatusResponse
+      type: object
+      oneOf:
+        - $ref: '#/components/schemas/NotificationsItemUserView'
+        - $ref: '#/components/schemas/NotificationsItemCommunityView'
+        - $ref: '#/components/schemas/NotificationsItemTopicView'
+        - $ref: '#/components/schemas/NotificationsItemPostView'
+        - $ref: '#/components/schemas/NotificationsItemReplyView'
+        - $ref: '#/components/schemas/NotificationsItemFeedView'
+        - $ref: '#/components/schemas/NotificationsItemPostMentionView'
+        - $ref: '#/components/schemas/NotificationsItemCommentMentionView' 
   
