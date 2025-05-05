@@ -986,7 +986,7 @@ paths:
           required: true
           schema:
             type: string
-            allowableValues:
+            enum:
               - all
               - new
               - read
@@ -3395,13 +3395,25 @@ components:
           $ref: '#/components/schemas/NotificationsCountsView' 
         items:
           title: NotificationsResponse.items
-          type: string
+          type: array
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/NotificationsItemUserView'
+            - $ref: '#/components/schemas/NotificationsItemCommunityView'
+            - $ref: '#/components/schemas/NotificationsItemTopicView'
+            - $ref: '#/components/schemas/NotificationsItemPostView'
+            - $ref: '#/components/schemas/NotificationsItemReplyView'
+            - $ref: '#/components/schemas/NotificationsItemFeedView'
+            - $ref: '#/components/schemas/NotificationsItemPostMentionView'
+            - $ref: '#/components/schemas/NotificationsItemCommentMentionView' 
         status:
           title: NotificationsResponse.status
           type: string
+          example: new
         user:
           title: NotificationsResponse.user
           type: string
+          example: MyPieFedUserName
       required:
         - counts
         - items
@@ -3426,6 +3438,76 @@ components:
         - all_notifications
       title: NotificationsCountsView
       type: object
+    NotificationsItemUserView:
+      properties:
+        notif_id:
+          title: NotificationsItemUserView.notif_id
+          type: integer
+          example: 1234
+        notif_type:
+          title: NotificationsItemUserView.notif_type
+          type: integer
+          example: 0
+        notif_subtype:
+          title: NotificationsItemUserView.notif_subtype
+          type: string
+          example: new_post_from_followed_user
+        author:
+          title: NotificationsItemUserView.author
+          type: object
+          $ref: '#/components/schemas/Person'
+        post:
+          title: NotificationsItemUserView.post
+          type: object
+          $ref: '#/components/schemas/PostView'
+        post_id:
+          title: NotificationsItemUserView.post_id
+          type: integer
+          example: 1234
+        notif_body:
+          title: NotificationsItemUserView.notif_body
+          type: string
+          example: "This is the body of a post."
+      required:
+        - notif_id
+      title: NotificationsItemUserView
+      type: object
+    NotificationsItemCommunityView:
+      properties:
+      required:
+      title: NotificationsItemCommunityView
+      type: object
+    NotificationsItemTopicView:
+      properties:
+      required:
+      title: NotificationsItemTopicView
+      type: object
+    NotificationsItemPostView:
+      properties:
+      required:
+      title: NotificationsItemPostView
+      type: object
+    NotificationsItemReplyView:
+      properties:
+      required:
+      title: NotificationsItemReplyView
+      type: object
+    NotificationsItemFeedView:
+      properties:
+      required:
+      title: NotificationsItemFeedView
+      type: object
+    NotificationsItemPostMentionView:
+      properties:
+      required:
+      title: NotificationsItemPostMentionView
+      type: object
+    NotificationsItemCommentMentionView:
+      properties:
+      required:
+      title: NotificationsItemCommentMentionView
+      type: object
+
       
     
   
