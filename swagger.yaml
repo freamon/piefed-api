@@ -3391,6 +3391,7 @@ components:
       properties:
         counts:
           title: NotificationsResponse.counts
+          type: object
           $ref: '#/components/schemas/NotificationsCountsView' 
         items:
           title: NotificationsResponse.items
