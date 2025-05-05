@@ -3412,13 +3412,13 @@ components:
       properties:
         new_notifications:
           title: NotificationsCountsView.new_notifications
-          type: int
+          type: integer
         read_notifications:
           title: NotificationsCountsView.read_notifications
-          type: int
+          type: integer
         total_notifications:
           title: NotificationsCountsView.total_notifications
-          type: int
+          type: integer
       title: NotificationsCountsView
       type: object
       
