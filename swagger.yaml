@@ -986,7 +986,7 @@ paths:
           required: true
           schema:
             type: string
-            enum:
+            allowableValues:
               - all
               - new
               - read
