@@ -3420,6 +3420,10 @@ components:
         total_notifications:
           title: NotificationsCountsView.total_notifications
           type: integer
+      required:
+        - new_notifications
+        - read_notifications
+        - all_notifications
       title: NotificationsCountsView
       type: object
       
