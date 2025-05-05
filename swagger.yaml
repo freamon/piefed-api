@@ -1000,6 +1000,34 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotificationsResponse'          
       summary: Get your user notifications
+  /user/notifications/{notif_id}/{read_status}:
+    put:
+      parameters:
+        - in: path
+          name: notif_id
+          required: true
+          schema:
+            type: integer
+            example: 1234
+        - in: path
+          name: read_status
+          required: true
+          schema: 
+            type: string
+            enum:
+              - read
+              - unread
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationsReadStatusResponse'
+      summary: Set the read status of a given notification.
+      
   /upload/image:
     post:
       tags:
@@ -3714,7 +3742,16 @@ components:
           example: "This is the body of a comment."
       title: NotificationsItemCommentMentionView
       type: object
-
-      
-    
+    NotificationsReadStatusResponse:
+      title: NotificationsReadStatusResponse
+      type: object
+      oneOf:
+        - $ref: '#/components/schemas/NotificationsItemUserView'
+        - $ref: '#/components/schemas/NotificationsItemCommunityView'
+        - $ref: '#/components/schemas/NotificationsItemTopicView'
+        - $ref: '#/components/schemas/NotificationsItemPostView'
+        - $ref: '#/components/schemas/NotificationsItemReplyView'
+        - $ref: '#/components/schemas/NotificationsItemFeedView'
+        - $ref: '#/components/schemas/NotificationsItemPostMentionView'
+        - $ref: '#/components/schemas/NotificationsItemCommentMentionView' 
   
