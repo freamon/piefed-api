@@ -992,11 +992,6 @@ paths:
               - read
       tags:
         - User
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Notifications'
       responses:
         '200':
           description: OK
@@ -3394,6 +3389,27 @@ components:
       type: object
     Notifications:
       properties:
+        counts:
+          title: Notifications.counts
+          $ref: '#/components/schemas/NotificationsCountsView' 
+        items:
+        status:
+          title: Notifications.status
+          type: string
+        user:
+          title: Notifictions.user
+          type: string
+    NotificationsCountsView:
+      properties:
+        new_notifications:
+          title: NotificationsCountsView.new_notifications
+          type: int
+        read_notifications:
+          title: NotificationsCountsView.read_notifications
+          type: int
+        total_notifications:
+          title: NotificationsCountsView.total_notifications
+          type: int
       
     
   
