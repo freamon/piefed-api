@@ -3390,15 +3390,22 @@ components:
     NotificationsResponse:
       properties:
         counts:
-          title: Notifications.counts
+          title: NotificationsResponse.counts
           $ref: '#/components/schemas/NotificationsCountsView' 
         items:
+          title: NotificationsResponse.items
+          type: string
         status:
-          title: Notifications.status
+          title: NotificationsResponse.status
           type: string
         user:
-          title: Notifictions.user
+          title: NotificationsResponse.user
           type: string
+      required:
+        - counts
+        - items
+        - status
+        - user
       title: NotificationsResponse
       type: object
     NotificationsCountsView:
