@@ -3387,7 +3387,7 @@ components:
           type: string
           example: https://preferred.social/static/media/image.png
       type: object
-    Notifications:
+    NotificationsResponse:
       properties:
         counts:
           title: Notifications.counts
@@ -3399,7 +3399,7 @@ components:
         user:
           title: Notifictions.user
           type: string
-      title: Notifications
+      title: NotificationsResponse
       type: object
     NotificationsCountsView:
       properties:
