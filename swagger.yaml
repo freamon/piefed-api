@@ -978,6 +978,33 @@ paths:
         '200':
           description: OK
       summary: Save your user settings.
+  /user/notifications/{status}:
+    get:
+      parameters:
+        - in: path 
+          name: status
+          required: true
+          schema:
+            type: string
+            enum:
+              - all
+              - new
+              - read
+      tags:
+        - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Notifications'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationsResponse'          
+      summary: Get your user notifications
   /upload/image:
     post:
       tags:
@@ -3365,5 +3392,8 @@ components:
           type: string
           example: https://preferred.social/static/media/image.png
       type: object
+    Notifications:
+      properties:
+      
     
   
