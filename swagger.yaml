@@ -3399,6 +3399,8 @@ components:
         user:
           title: Notifictions.user
           type: string
+      title: Notifications
+      type: object
     NotificationsCountsView:
       properties:
         new_notifications:
@@ -3410,6 +3412,8 @@ components:
         total_notifications:
           title: NotificationsCountsView.total_notifications
           type: int
+      title: NotificationsCountsView
+      type: object
       
     
   
