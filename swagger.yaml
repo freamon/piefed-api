@@ -978,10 +978,10 @@ paths:
         '200':
           description: OK
       summary: Save your user settings.
-  /user/notifications/{status}:
+  /user/notifications:
     get:
       parameters:
-        - in: path 
+        - in: query
           name: status
           required: true
           schema:
@@ -990,8 +990,19 @@ paths:
               - all
               - new
               - read
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: string
+            default: 1
       tags:
         - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserNotifications'
       responses:
         '200':
           description: OK
@@ -1000,23 +1011,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotificationsResponse'          
       summary: Get your user notifications
-  /user/notifications/{notif_id}/{read_status}:
+  /user/notification_status:
     put:
       parameters:
-        - in: path
+        - in: query
           name: notif_id
           required: true
           schema:
             type: integer
             example: 1234
-        - in: path
+        - in: query
           name: read_status
           required: true
           schema: 
             type: string
             enum:
-              - read
-              - unread
+              - true
+              - false
       tags:
         - User
       responses:
@@ -1027,7 +1038,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/NotificationsReadStatusResponse'
       summary: Set the read status of a given notification.
-      
   /upload/image:
     post:
       tags:
@@ -3415,6 +3425,14 @@ components:
           type: string
           example: https://preferred.social/static/media/image.png
       type: object
+    UserNotifications:
+      properties:
+        status:
+          title: UserNotifications.status
+          type: string
+        page:
+          title: UserNotifications.page
+          type: string
     NotificationsResponse:
       properties:
         counts:
