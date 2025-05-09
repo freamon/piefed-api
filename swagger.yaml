@@ -978,18 +978,24 @@ paths:
         '200':
           description: OK
       summary: Save your user settings.
-  /user/notifications/{status}:
+  /user/notifications:
     get:
       parameters:
-        - in: path 
+        - in: query
           name: status
           required: true
           schema:
             type: string
             enum:
-              - all
-              - new
-              - read
+              - All
+              - New
+              - Read
+        - in: query
+          name: page
+          required: false
+          schema:
+            type: string
+            default: 1
       tags:
         - User
       responses:
@@ -999,24 +1005,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotificationsResponse'          
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'                
       summary: Get your user notifications
-  /user/notifications/{notif_id}/{read_status}:
+  /user/notification_state:
     put:
       parameters:
-        - in: path
+        - in: query
           name: notif_id
           required: true
           schema:
             type: integer
             example: 1234
-        - in: path
-          name: read_status
+        - in: query
+          name: read_state
           required: true
           schema: 
             type: string
             enum:
-              - read
-              - unread
+              - true
+              - false
       tags:
         - User
       responses:
@@ -1026,8 +1038,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/NotificationsReadStatusResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:  
+                $ref: '#/components/schemas/BadRequest'                
       summary: Set the read status of a given notification.
-      
+  /user/notifications_count:
+    get:
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationsCountResponse'    
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:  
+                $ref: '#/components/schemas/BadRequest'                
+      summary: Get user unread notifications count.
+  /user/mark_all_notifications_read:
+    put:
+      tags:
+        - User
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationsMarkAllReadResponse'    
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:  
+                $ref: '#/components/schemas/BadRequest'         
+      summary: Set all unread user notifications to read.
+
   /upload/image:
     post:
       tags:
@@ -3437,7 +3491,7 @@ components:
         status:
           title: NotificationsResponse.status
           type: string
-          example: new
+          example: New
         user:
           title: NotificationsResponse.user
           type: string
@@ -3754,4 +3808,22 @@ components:
         - $ref: '#/components/schemas/NotificationsItemFeedView'
         - $ref: '#/components/schemas/NotificationsItemPostMentionView'
         - $ref: '#/components/schemas/NotificationsItemCommentMentionView' 
+    NotificationsCountResponse:
+      title: NotificationsCountResponse
+      type: object
+      properties:
+        count:
+          title: NotificationsCountResponse.count
+          type: integer
+          example: 42
+    NotificationsMarkAllReadResponse:
+      title: NotificationsMarkAllReadResponse
+      type: object
+      properties:
+        mark_all_notifications_as_read:
+          title: NotificationsMarkAllReadResponse.mark_all_notifications_as_read
+          type: string
+          example: complete
+
+          
   
