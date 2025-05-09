@@ -1062,6 +1062,7 @@ paths:
             application/json:
               schema:  
                 $ref: '#/components/schemas/BadRequest'                
+      summary: Get user unread notifications count.
   /user/mark_all_notifications_read:
     put:
       tags:
