@@ -66,7 +66,6 @@ paths:
       parameters:
         - name: Search
           in: query
-          explode: true
           schema:
             $ref: '#/components/schemas/Search'
       responses:
@@ -980,24 +979,14 @@ paths:
       summary: Save your user settings.
   /user/notifications:
     get:
-      parameters:
-        - in: query
-          name: status
-          required: true
-          schema:
-            type: string
-            enum:
-              - All
-              - New
-              - Read
-        - in: query
-          name: page
-          required: false
-          schema:
-            type: string
-            default: 1
       tags:
         - User
+      parameters:
+        - name: Status
+          in: query
+          explode: true
+          schema:
+            $ref: '#/components/schemas/GetNotificationStatus'
       responses:
         '200':
           description: OK
@@ -1014,23 +1003,13 @@ paths:
       summary: Get your user notifications
   /user/notification_state:
     put:
-      parameters:
-        - in: query
-          name: notif_id
-          required: true
-          schema:
-            type: integer
-            example: 1234
-        - in: query
-          name: read_state
-          required: true
-          schema: 
-            type: string
-            enum:
-              - true
-              - false
       tags:
         - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditNotificationState'
       responses:
         '200':
           description: OK
@@ -1081,7 +1060,6 @@ paths:
               schema:  
                 $ref: '#/components/schemas/BadRequest'         
       summary: Set all unread user notifications to read.
-
   /upload/image:
     post:
       tags:
@@ -1258,7 +1236,12 @@ components:
         - Active
         - Hot
         - New
-        - Top
+        - TopHour
+        - TopSixHour
+        - TopTwelveHour
+        - TopDay
+        - TopWeek
+        - TopMonth
         - Scaled
       title: SortType
       type: string
@@ -3468,6 +3451,37 @@ components:
         url:
           type: string
           example: https://preferred.social/static/media/image.png
+      type: object
+    GetNotificationStatus:
+      properties:
+        status:
+          title: GetNotificationStatus.status
+          type: string
+          enum: 
+            - All
+            - New
+            - Read
+        page:
+          title: GetNotificationStatus.page
+          type: integer
+          default: 1
+      required:
+        - status
+      additionalProperties: false
+      title: GetNotificationStatus
+      type: object
+    EditNotificationState:
+      properties:
+        notif_id:
+          title: GetNotificationStatus.notif_id
+          type: integer
+        read_state:
+          title: GetNotificationStatus.read_state
+          type: boolean
+      required:
+        - notif_id, read_state
+      additionalProperties: false
+      title: EditNotificationState
       type: object
     NotificationsResponse:
       properties:
