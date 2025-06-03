@@ -271,6 +271,30 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequest'
       summary: Subscribe to activities in a community.
+  /community/moderate/bans:
+    get:
+      tags:
+        - Community
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetCommunityModerationBansList'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCommunityModerationBansListResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Get the list of banned users for a community. 
+        
   /post/list:
     get:
       tags:
@@ -3838,6 +3862,59 @@ components:
           title: NotificationsMarkAllReadResponse.mark_all_notifications_as_read
           type: string
           example: complete
-
+    GetCommunityModerationBansList:
+      title: GetCommunityModerationBansList
+      type: object
+      properties:
+        community_id:
+          title: GetCommunityModerationBansList.community_id
+          type: integer
+          example: 42
+        page:
+          title: GetCommunityModerationBansList.page
+          type: integer
+          example: 1
+      required:
+        - comment_id
+    GetCommunityModerationBansListResponse:
+      title: GetCommunityModerationBansListResponse
+      type: object
+      properties:
+        items:
+          title: GetCommunityModerationBansListResponse.items
+          type: array
+          $ref: '#/components/schemas/CommunityModerationBanItem'
+        next_page:
+          title: GetCommunityModerationBansListResponse.next_page
+          type: string
+          example: "3"
+    CommunityModerationBanItem:
+      title: CommunityModerationBanItem
+      type: object
+      properties:
+        reason:
+          title: CommunityModerationBanItem.reason
+          type: string
+          example: "Violation of Rule 4"
+        expiredAt:
+          title: CommunityModerationBanItem.expiredAt
+          type: string
+          example: "2042-01-01T12:00:00"
+        community: 
+          title: CommunityModerationBanItem.community
+          type: object
+          $ref: '#/components/schemas/CommunityView'
+        bannedUser:
+          title: CommunityModerationBanItem.bannedUser
+          type: object 
+          $ref: '#/components/schemas/Person'
+        bannedBy:
+          title: CommunityModerationBanItem.bannedBy
+          type: object 
+          $ref: '#/components/schemas/Person'
+        expired: 
+          title: CommunityModerationBanItem.expired
+          type: boolean
+          example: false
           
   
