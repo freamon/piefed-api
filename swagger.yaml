@@ -275,11 +275,12 @@ paths:
     get:
       tags:
         - Community
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/GetCommunityModerationBansList'
+      parameters:
+        - name: GetCommunityModerationBansList
+          in: query
+          explode: true
+          schema:
+            $ref: '#/components/schemas/GetCommunityModerationBansList'        
       responses:
         '200':
           description: OK
@@ -294,7 +295,29 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequest'
       summary: Get the list of banned users for a community. 
-        
+  /community/moderate/ban:
+    post:
+      tags:
+        - Community
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCommunityModerateBan'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostCommunityModerateBanResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'      
+      summary: Ban a user from a community.
   /post/list:
     get:
       tags:
@@ -3883,7 +3906,8 @@ components:
         items:
           title: GetCommunityModerationBansListResponse.items
           type: array
-          $ref: '#/components/schemas/CommunityModerationBanItem'
+          items:
+            $ref: '#/components/schemas/CommunityModerationBanItem'
         next_page:
           title: GetCommunityModerationBansListResponse.next_page
           type: string
@@ -3916,5 +3940,35 @@ components:
           title: CommunityModerationBanItem.expired
           type: boolean
           example: false
+    PostCommunityModerateBan:
+      title: PostCommunityModerateBan
+      type: object 
+      properties:
+        community_id: 
+          title: PostCommunityModerateBan.community_id
+          type: integer
+          example: 42
+        user_id: 
+          title: PostCommunityModerateBan.user_id
+          type: integer
+          example: 1234
+        reason: 
+          title: PostCommunityModerateBan.reason
+          type: string
+          example: "Violation of Rule 1."
+        expiredAt: 
+          title: PostCommunityModerateBan.expiredAt
+          type: string
+          example: "2025-01-01T12:00:00"
+      required:
+        - community_id
+        - user_id
+        - reason 
+        - expiredAt
+    PostCommunityModerateBanResponse:
+      title: PostCommunityModerateBanResponse
+      type: object 
+      $ref: '#/components/schemas/CommunityModerationBanItem'
+        
           
   
