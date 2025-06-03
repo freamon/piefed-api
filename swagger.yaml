@@ -318,6 +318,29 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequest'      
       summary: Ban a user from a community.
+  /community/moderate/unban:
+    put:
+      tags:
+        - Community
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutCommunityModerateUnBan'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PutCommunityModerateUnBanResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'      
+      summary: Ban a user from a community.      
   /post/list:
     get:
       tags:
@@ -3969,6 +3992,27 @@ components:
       title: PostCommunityModerateBanResponse
       type: object 
       $ref: '#/components/schemas/CommunityModerationBanItem'
+    PutCommunityModerateUnBan:
+      title: PutCommunityModerateUnBan
+      type: object
+      properties:
+        community_id: 
+          title: PutCommunityModerateUnBan.community_id
+          type: integer
+          example: 42
+        user_id: 
+          title: PutCommunityModerateUnBan.user_id
+          type: integer
+          example: 1234      
+      required:
+        - community_id
+        - user_id          
+    PutCommunityModerateUnBanResponse:
+      title: PutCommunityModerateUnBanResponse
+      type: object
+      $ref: '#/components/schemas/CommunityModerationBanItem'
+          
+
         
           
   
