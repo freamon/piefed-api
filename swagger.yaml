@@ -340,7 +340,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BadRequest'      
-      summary: Ban a user from a community.      
+      summary: Unban a user from a community.   
+  /community/moderate/post/nsfw:
+    post: 
+      tags:
+       - Community
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCommunityModeratePostNsfw'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostCommunityModeratePostNsfwResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'        
+      summary: Mark or unmark a post as NSFW.
   /post/list:
     get:
       tags:
@@ -4011,6 +4034,25 @@ components:
       title: PutCommunityModerateUnBanResponse
       type: object
       $ref: '#/components/schemas/CommunityModerationBanItem'
+    PostCommunityModeratePostNsfw:
+      title: PostCommunityModeratePostNsfw
+      type: object
+      properties:
+        post_id:
+          title: PostCommunityModeratePostNsfw.post_id
+          type: integer
+          example: 123456
+        nsfw_status:
+          title: PostCommunityModeratePostNsfw.nsfw_status
+          type: boolean
+          example: true
+      required:
+        - post_id 
+        - nsfw_status
+    PostCommunityModeratePostNsfwResponse:
+      title: PostCommunityModeratePostNsfwResponse
+      type: object
+      $ref: '#/components/schemas/PostView'
           
 
         
