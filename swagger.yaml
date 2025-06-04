@@ -271,6 +271,99 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequest'
       summary: Subscribe to activities in a community.
+  /community/moderate/bans:
+    get:
+      tags:
+        - Community
+      parameters:
+        - name: GetCommunityModerationBansList
+          in: query
+          explode: true
+          schema:
+            $ref: '#/components/schemas/GetCommunityModerationBansList'        
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCommunityModerationBansListResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Get the list of banned users for a community. 
+  /community/moderate/ban:
+    post:
+      tags:
+        - Community
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCommunityModerateBan'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostCommunityModerateBanResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'      
+      summary: Ban a user from a community.
+  /community/moderate/unban:
+    put:
+      tags:
+        - Community
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutCommunityModerateUnBan'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PutCommunityModerateUnBanResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'      
+      summary: Unban a user from a community.   
+  /community/moderate/post/nsfw:
+    post: 
+      tags:
+       - Community
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCommunityModeratePostNsfw'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostCommunityModeratePostNsfwResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'        
+      summary: Mark or unmark a post as NSFW.
   /post/list:
     get:
       tags:
@@ -3838,6 +3931,130 @@ components:
           title: NotificationsMarkAllReadResponse.mark_all_notifications_as_read
           type: string
           example: complete
+    GetCommunityModerationBansList:
+      title: GetCommunityModerationBansList
+      type: object
+      properties:
+        community_id:
+          title: GetCommunityModerationBansList.community_id
+          type: integer
+          example: 42
+        page:
+          title: GetCommunityModerationBansList.page
+          type: integer
+          example: 1
+      required:
+        - comment_id
+    GetCommunityModerationBansListResponse:
+      title: GetCommunityModerationBansListResponse
+      type: object
+      properties:
+        items:
+          title: GetCommunityModerationBansListResponse.items
+          type: array
+          items:
+            $ref: '#/components/schemas/CommunityModerationBanItem'
+        next_page:
+          title: GetCommunityModerationBansListResponse.next_page
+          type: string
+          example: "3"
+    CommunityModerationBanItem:
+      title: CommunityModerationBanItem
+      type: object
+      properties:
+        reason:
+          title: CommunityModerationBanItem.reason
+          type: string
+          example: "Violation of Rule 4"
+        expiredAt:
+          title: CommunityModerationBanItem.expiredAt
+          type: string
+          example: "2042-01-01T12:00:00"
+        community: 
+          title: CommunityModerationBanItem.community
+          type: object
+          $ref: '#/components/schemas/CommunityView'
+        bannedUser:
+          title: CommunityModerationBanItem.bannedUser
+          type: object 
+          $ref: '#/components/schemas/Person'
+        bannedBy:
+          title: CommunityModerationBanItem.bannedBy
+          type: object 
+          $ref: '#/components/schemas/Person'
+        expired: 
+          title: CommunityModerationBanItem.expired
+          type: boolean
+          example: false
+    PostCommunityModerateBan:
+      title: PostCommunityModerateBan
+      type: object 
+      properties:
+        community_id: 
+          title: PostCommunityModerateBan.community_id
+          type: integer
+          example: 42
+        user_id: 
+          title: PostCommunityModerateBan.user_id
+          type: integer
+          example: 1234
+        reason: 
+          title: PostCommunityModerateBan.reason
+          type: string
+          example: "Violation of Rule 1."
+        expiredAt: 
+          title: PostCommunityModerateBan.expiredAt
+          type: string
+          example: "2025-01-01T12:00:00"
+      required:
+        - community_id
+        - user_id
+        - reason 
+        - expiredAt
+    PostCommunityModerateBanResponse:
+      title: PostCommunityModerateBanResponse
+      type: object 
+      $ref: '#/components/schemas/CommunityModerationBanItem'
+    PutCommunityModerateUnBan:
+      title: PutCommunityModerateUnBan
+      type: object
+      properties:
+        community_id: 
+          title: PutCommunityModerateUnBan.community_id
+          type: integer
+          example: 42
+        user_id: 
+          title: PutCommunityModerateUnBan.user_id
+          type: integer
+          example: 1234      
+      required:
+        - community_id
+        - user_id          
+    PutCommunityModerateUnBanResponse:
+      title: PutCommunityModerateUnBanResponse
+      type: object
+      $ref: '#/components/schemas/CommunityModerationBanItem'
+    PostCommunityModeratePostNsfw:
+      title: PostCommunityModeratePostNsfw
+      type: object
+      properties:
+        post_id:
+          title: PostCommunityModeratePostNsfw.post_id
+          type: integer
+          example: 123456
+        nsfw_status:
+          title: PostCommunityModeratePostNsfw.nsfw_status
+          type: boolean
+          example: true
+      required:
+        - post_id 
+        - nsfw_status
+    PostCommunityModeratePostNsfwResponse:
+      title: PostCommunityModeratePostNsfwResponse
+      type: object
+      $ref: '#/components/schemas/PostView'
+          
 
+        
           
   
