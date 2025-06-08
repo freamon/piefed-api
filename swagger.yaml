@@ -1155,6 +1155,21 @@ paths:
               schema:  
                 $ref: '#/components/schemas/BadRequest'         
       summary: Set all unread user notifications to read.
+  /user/verify_credentials:
+    post:
+      tags:
+        - User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: BAD REQUEST
+      summary: Verify username / password credentials
   /upload/image:
     post:
       tags:
