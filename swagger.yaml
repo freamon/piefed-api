@@ -3982,7 +3982,6 @@ components:
         - Top
         - New
         - Old
-        - Controversial
       title: CommentSortType
       type: string
     
