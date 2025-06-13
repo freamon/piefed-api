@@ -3136,6 +3136,7 @@ components:
           title: Language.name
           type: string
           example: English
+      title: LanguageView
       type: object
     InstanceBlockView:
       properties:
