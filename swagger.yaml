@@ -2085,6 +2085,7 @@ components:
         bio:
           title: SaveUserSettings.bio
           type: string
+      type: object
     GetNotificationStatus:
       properties:
         status:
@@ -2471,6 +2472,7 @@ components:
         error:
           type: string
           example: incorrect_login
+      type: object
     NotificationsResponse:
       properties:
         counts:
@@ -3134,6 +3136,8 @@ components:
           title: Language.name
           type: string
           example: English
+      title: LanguageView
+      type: object
     InstanceBlockView:
       properties:
         person:
