@@ -256,6 +256,29 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequest'
       summary: Block a community.
+  /community/mod:
+    post:
+      tags:
+        - Community
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddModToCommunity'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddModToCommunityResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Add or remove a moderator for your community..
   /community/subscribe:
     put:
       tags:
@@ -1435,6 +1458,24 @@ components:
       additionalProperties: false
       title: DeleteCommunity
       type: object
+    AddModToCommunity:
+      properties:
+        community_id:
+          title: AddModToCommunity.community_id
+          type: integer
+        person_id:
+          title: AddModToCommunity.person_id
+          type: integer
+        added:
+          title: AddModToCommunity.added
+          type: boolean
+      required:
+        - community_id
+        - person_id
+        - added
+      additionalProperties: false
+      title: AddModToCommunity
+      type: object
     ListCommunities:
       properties:
         type_:
@@ -2260,6 +2301,18 @@ components:
         - blocked
       additionalProperties: false
       title: BlockCommunityResponse
+      type: object
+    AddModToCommunityResponse:
+      properties:
+        moderators:
+          items:
+            $ref: '#/components/schemas/CommunityModeratorView'
+          title: AddModToCommunityResponse.moderators
+          type: array
+      required:
+        - moderators
+      additionalProperties: false
+      title: AddModToCommunityResponse
       type: object
     ModerationCommunityBansListResponse:
       title: ModerationCommunityBansListResponse
