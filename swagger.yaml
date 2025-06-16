@@ -88,7 +88,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BadRequest'
-  
+  /resolve_object:
+    get:
+      tags:
+        - Miscellaneous
+      parameters:
+        - name: ResolveObject
+          in: query
+          schema:
+            $ref: '#/components/schemas/ResolveObject'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResolveObjectResponse'
+      summary: Fetch a non-local / federated object.
+
   /community:
     get:
       tags:
@@ -1353,6 +1370,16 @@ components:
       additionalProperties: false
       title: Search
       type: object
+    ResolveObject:
+      properties:
+        q:
+          title: ResolveObject.q
+          type: string
+      required:
+        - q
+      additionalProperties: false
+      title: ResolveObject
+      type: object
     # community
     GetCommunity:
       properties:
@@ -2233,6 +2260,23 @@ components:
         - users
       additionalProperties: false
       title: SearchResponse
+      type: object
+    ResolveObjectResponse:
+      properties:
+        comment:
+          $ref: '#/components/schemas/CommentView'
+          title: ResolveObjectResponse.comment
+        post:
+          $ref: '#/components/schemas/PostView'
+          title: ResolveObjectResponse.post
+        community:
+          $ref: '#/components/schemas/CommunityView'
+          title: ResolveObjectResponse.community
+        person:
+          $ref: '#/components/schemas/PersonView'
+          title: ResolveObjectResponse.person
+      additionalProperties: false
+      title: ResolveObjectResponse
       type: object
     # community
     GetCommunityResponse:
