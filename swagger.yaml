@@ -1912,24 +1912,12 @@ components:
         community_id:
           title: GetComments.community_id
           type: integer
-        community_name:
-          title: GetComments.community_name
-          type: string
         post_id:
           title: GetComments.post_id
           type: integer
         parent_id:
           title: GetComments.parent_id
           type: integer
-        saved_only:
-          title: GetComments.saved_only
-          type: boolean
-        liked_only:
-          title: GetComments.liked_only
-          type: boolean
-        disliked_only:
-          title: GetComments.disliked_only
-          type: boolean
       additionalProperties: false
       title: GetComments
       type: object
