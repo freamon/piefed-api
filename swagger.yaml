@@ -1918,6 +1918,9 @@ components:
         parent_id:
           title: GetComments.parent_id
           type: integer
+        person_id:
+          title: GetComments.person_id
+          type: integer
       additionalProperties: false
       title: GetComments
       type: object
