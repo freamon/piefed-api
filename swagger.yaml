@@ -2053,6 +2053,9 @@ components:
         saved_only:
           title: GetPersonDetails.saved_only
           type: boolean
+        include_content:
+          title: GetPersonDetails.include_content
+          type: boolean
       additionalProperties: false
       title: GetPersonDetails
       type: object
