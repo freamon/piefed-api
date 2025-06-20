@@ -105,6 +105,18 @@ paths:
               schema:
                 $ref: '#/components/schemas/ResolveObjectResponse'
       summary: Fetch a non-local / federated object.
+  /federated_instances:
+    get:
+      tags:
+        - Miscellaneous
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFederatedInstancesResponse'
+      summary: Fetch federated instances.
 
   /community:
     get:
@@ -2272,6 +2284,14 @@ components:
       additionalProperties: false
       title: ResolveObjectResponse
       type: object
+    GetFederatedInstancesResponse:
+      properties:
+        federated_instances:
+          $ref: '#/components/schemas/FederatedInstancesView'
+          title: GetFederatedInstancesResponse.federated_instances
+      additionalProperties: false
+      title: GetFederatedInstancesResponse
+      type: object
     # community
     GetCommunityResponse:
       properties:
@@ -2700,6 +2720,33 @@ components:
         - domain
         - published
       title: Instance
+      type: object
+    InstanceWithoutFederationState:
+      properties:
+        id:
+          title: InstanceWithoutFederationState.id
+          type: integer
+        domain:
+          title: InstanceWithoutFederationState.domain
+          type: string
+        published:
+          title: InstanceWithoutFederationState.published
+          type: string
+        updated:
+          title: InstanceWithoutFederationState.updated
+          type: string
+        software:
+          title: InstanceWithoutFederationState.software
+          type: string
+        version:
+          title: InstanceWithoutFederationState.version
+          type: string
+      required:
+        - id
+        - domain
+        - published
+      additionalProperties: false
+      title: InstanceWithoutFederationState
       type: object
     Community:
       properties:
@@ -3187,6 +3234,30 @@ components:
     
     # -- views --
     
+    FederatedInstancesView:
+      properties:
+        linked:
+          items:
+            $ref: '#/components/schemas/InstanceWithoutFederationState'
+          title: FederatedInstances.linked
+          type: array
+        allowed:
+          items:
+            $ref: '#/components/schemas/InstanceWithoutFederationState'
+          title: FederatedInstances.allowed
+          type: array
+        blocked:
+          items:
+            $ref: '#/components/schemas/InstanceWithoutFederationState'
+          title: FederatedInstances.blocked
+          type: array
+      required:
+        - linked
+        - allowed
+        - blocked
+      additionalProperties: false
+      title: FederatedInstances
+      type: object
     CommunityBlockView:
       properties:
         community:
