@@ -14,9 +14,9 @@ info:
     url: https://github.com/freamon/piefed-api
 
 servers:
-  - url: https://preferred.social/api/alpha
   - url: https://piefed.social/api/alpha
   - url: https://feddit.online/api/alpha
+  - url: https://preferred.social/api/alpha
   - url: https://pythag.net/api/alpha
 
 security:
