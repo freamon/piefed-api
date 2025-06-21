@@ -2223,9 +2223,15 @@ components:
         version:
           title: GetSiteResponse.version
           type: string
+        admins:
+          items:
+            $ref: '#/components/schemas/PersonView'
+          title: GetSiteResponse.admins
+          type: array
       required:
         - version
         - site
+        - admins
       title: GetSiteResponse
       type: object
     BlockInstanceResponse:
