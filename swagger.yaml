@@ -1655,8 +1655,8 @@ components:
         sort:
           $ref: '#/components/schemas/SortType'
           title: GetPosts.sort
-        page:
-          title: GetPosts.page
+        page_cursor:
+          title: GetPosts.page_cursor
           type: integer
         limit:
           title: GetPosts.limit
@@ -2839,8 +2839,8 @@ components:
         body:
           title: Post.body
           type: string
-        creator_id:
-          title: Post.creator_id
+        user_id:
+          title: Post.user_id
           type: integer
         community_id:
           title: Post.community_id
@@ -2884,7 +2884,7 @@ components:
       required:
         - id
         - title
-        - creator_id
+        - user_id
         - community_id
         - removed
         - locked
@@ -2949,14 +2949,14 @@ components:
         id:
           title: Comment.id
           type: integer
-        creator_id:
-          title: Comment.creator_id
+        user_id:
+          title: Comment.user_id
           type: integer
         post_id:
           title: Comment.post_id
           type: integer
-        content:
-          title: Comment.content
+        body:
+          title: Comment.body
           type: string
         removed:
           title: Comment.removed
@@ -2987,16 +2987,15 @@ components:
           type: integer
       required:
         - id
-        - creator_id
+        - user_id
         - post_id
-        - content
+        - body
         - removed
         - published
         - deleted
         - ap_id
         - local
         - path
-        - distinguished
         - language_id
       additionalProperties: false
       title: Comment
@@ -3152,7 +3151,7 @@ components:
           type: string
       required:
         - id
-        - name
+        - user_name
         - banned
         - published
         - actor_id
@@ -3491,9 +3490,6 @@ components:
         hidden:
           title: PostView.hidden
           type: boolean
-        creator_blocked:
-          title: PostView.creator_blocked
-          type: boolean
         my_vote:
           title: PostView.my_vote
           type: integer
@@ -3514,7 +3510,6 @@ components:
         - activityalert
         - read
         - hidden
-        - creator_blocked
         - unread_comments
       additionalProperties: false
       title: PostView
@@ -3533,9 +3528,6 @@ components:
         counts:
           $ref: '#/components/schemas/CommunityAggregates'
           title: CommunityView.counts
-        banned_from_community:
-          title: CommunityView.banned_from_community
-          type: boolean
         activity_alert:
           title: CommunityView.activity_alert
           type: boolean
@@ -3544,7 +3536,6 @@ components:
         - subscribed
         - blocked
         - counts
-        - banned_from_community
         - activity_alert
       additionalProperties: false
       title: CommunityView
@@ -4241,7 +4232,7 @@ components:
       type: object
     CommunityAggregates:
       properties:
-        community_id:
+        id:
           title: CommunityAggregates.community_id
           type: integer
         subscriptions_count:
@@ -4257,7 +4248,7 @@ components:
           title: CommunityAggregates.published
           type: string
       required:
-        - community_id
+        - id
         - subscriptions_count
         - post_count
         - post_reply_count
