@@ -14,9 +14,9 @@ info:
     url: https://github.com/freamon/piefed-api
 
 servers:
-  - url: https://preferred.social/api/alpha
   - url: https://piefed.social/api/alpha
   - url: https://feddit.online/api/alpha
+  - url: https://preferred.social/api/alpha
   - url: https://pythag.net/api/alpha
 
 security:
@@ -88,7 +88,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BadRequest'
-  
+  /resolve_object:
+    get:
+      tags:
+        - Miscellaneous
+      parameters:
+        - name: ResolveObject
+          in: query
+          schema:
+            $ref: '#/components/schemas/ResolveObject'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResolveObjectResponse'
+      summary: Fetch a non-local / federated object.
+  /federated_instances:
+    get:
+      tags:
+        - Miscellaneous
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFederatedInstancesResponse'
+      summary: Fetch federated instances.
+
   /community:
     get:
       tags:
@@ -256,6 +285,29 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequest'
       summary: Block a community.
+  /community/mod:
+    post:
+      tags:
+        - Community
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddModToCommunity'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddModToCommunityResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Add or remove a moderator for your community..
   /community/subscribe:
     put:
       tags:
@@ -1330,6 +1382,16 @@ components:
       additionalProperties: false
       title: Search
       type: object
+    ResolveObject:
+      properties:
+        q:
+          title: ResolveObject.q
+          type: string
+      required:
+        - q
+      additionalProperties: false
+      title: ResolveObject
+      type: object
     # community
     GetCommunity:
       properties:
@@ -1438,6 +1500,24 @@ components:
         - deleted
       additionalProperties: false
       title: DeleteCommunity
+      type: object
+    AddModToCommunity:
+      properties:
+        community_id:
+          title: AddModToCommunity.community_id
+          type: integer
+        person_id:
+          title: AddModToCommunity.person_id
+          type: integer
+        added:
+          title: AddModToCommunity.added
+          type: boolean
+      required:
+        - community_id
+        - person_id
+        - added
+      additionalProperties: false
+      title: AddModToCommunity
       type: object
     ListCommunities:
       properties:
@@ -1579,8 +1659,8 @@ components:
         sort:
           $ref: '#/components/schemas/SortType'
           title: GetPosts.sort
-        page:
-          title: GetPosts.page
+        page_cursor:
+          title: GetPosts.page_cursor
           type: integer
         limit:
           title: GetPosts.limit
@@ -1850,24 +1930,15 @@ components:
         community_id:
           title: GetComments.community_id
           type: integer
-        community_name:
-          title: GetComments.community_name
-          type: string
         post_id:
           title: GetComments.post_id
           type: integer
         parent_id:
           title: GetComments.parent_id
           type: integer
-        saved_only:
-          title: GetComments.saved_only
-          type: boolean
-        liked_only:
-          title: GetComments.liked_only
-          type: boolean
-        disliked_only:
-          title: GetComments.disliked_only
-          type: boolean
+        person_id:
+          title: GetComments.person_id
+          type: integer
       additionalProperties: false
       title: GetComments
       type: object
@@ -2000,6 +2071,9 @@ components:
         saved_only:
           title: GetPersonDetails.saved_only
           type: boolean
+        include_content:
+          title: GetPersonDetails.include_content
+          type: boolean
       additionalProperties: false
       title: GetPersonDetails
       type: object
@@ -2091,6 +2165,7 @@ components:
         bio:
           title: SaveUserSettings.bio
           type: string
+      type: object
     GetNotificationStatus:
       properties:
         status:
@@ -2150,9 +2225,15 @@ components:
         version:
           title: GetSiteResponse.version
           type: string
+        admins:
+          items:
+            $ref: '#/components/schemas/PersonView'
+          title: GetSiteResponse.admins
+          type: array
       required:
         - version
         - site
+        - admins
       title: GetSiteResponse
       type: object
     BlockInstanceResponse:
@@ -2193,6 +2274,31 @@ components:
         - users
       additionalProperties: false
       title: SearchResponse
+      type: object
+    ResolveObjectResponse:
+      properties:
+        comment:
+          $ref: '#/components/schemas/CommentView'
+          title: ResolveObjectResponse.comment
+        post:
+          $ref: '#/components/schemas/PostView'
+          title: ResolveObjectResponse.post
+        community:
+          $ref: '#/components/schemas/CommunityView'
+          title: ResolveObjectResponse.community
+        person:
+          $ref: '#/components/schemas/PersonView'
+          title: ResolveObjectResponse.person
+      additionalProperties: false
+      title: ResolveObjectResponse
+      type: object
+    GetFederatedInstancesResponse:
+      properties:
+        federated_instances:
+          $ref: '#/components/schemas/FederatedInstancesView'
+          title: GetFederatedInstancesResponse.federated_instances
+      additionalProperties: false
+      title: GetFederatedInstancesResponse
       type: object
     # community
     GetCommunityResponse:
@@ -2261,6 +2367,18 @@ components:
         - blocked
       additionalProperties: false
       title: BlockCommunityResponse
+      type: object
+    AddModToCommunityResponse:
+      properties:
+        moderators:
+          items:
+            $ref: '#/components/schemas/CommunityModeratorView'
+          title: AddModToCommunityResponse.moderators
+          type: array
+      required:
+        - moderators
+      additionalProperties: false
+      title: AddModToCommunityResponse
       type: object
     ModerationCommunityBansListResponse:
       title: ModerationCommunityBansListResponse
@@ -2473,6 +2591,7 @@ components:
         error:
           type: string
           example: incorrect_login
+      type: object
     NotificationsResponse:
       properties:
         counts:
@@ -2614,6 +2733,33 @@ components:
         - published
       title: Instance
       type: object
+    InstanceWithoutFederationState:
+      properties:
+        id:
+          title: InstanceWithoutFederationState.id
+          type: integer
+        domain:
+          title: InstanceWithoutFederationState.domain
+          type: string
+        published:
+          title: InstanceWithoutFederationState.published
+          type: string
+        updated:
+          title: InstanceWithoutFederationState.updated
+          type: string
+        software:
+          title: InstanceWithoutFederationState.software
+          type: string
+        version:
+          title: InstanceWithoutFederationState.version
+          type: string
+      required:
+        - id
+        - domain
+        - published
+      additionalProperties: false
+      title: InstanceWithoutFederationState
+      type: object
     Community:
       properties:
         actor_id:
@@ -2705,8 +2851,8 @@ components:
         body:
           title: Post.body
           type: string
-        creator_id:
-          title: Post.creator_id
+        user_id:
+          title: Post.user_id
           type: integer
         community_id:
           title: Post.community_id
@@ -2754,7 +2900,7 @@ components:
       required:
         - id
         - title
-        - creator_id
+        - user_id
         - community_id
         - removed
         - locked
@@ -2821,14 +2967,14 @@ components:
         id:
           title: Comment.id
           type: integer
-        creator_id:
-          title: Comment.creator_id
+        user_id:
+          title: Comment.user_id
           type: integer
         post_id:
           title: Comment.post_id
           type: integer
-        content:
-          title: Comment.content
+        body:
+          title: Comment.body
           type: string
         removed:
           title: Comment.removed
@@ -2862,16 +3008,15 @@ components:
           type: integer
       required:
         - id
-        - creator_id
+        - user_id
         - post_id
-        - content
+        - body
         - removed
         - published
         - deleted
         - ap_id
         - local
         - path
-        - distinguished
         - language_id
       additionalProperties: false
       title: Comment
@@ -3037,7 +3182,7 @@ components:
           type: string
       required:
         - id
-        - name
+        - user_name
         - banned
         - published
         - actor_id
@@ -3125,6 +3270,30 @@ components:
     
     # -- views --
     
+    FederatedInstancesView:
+      properties:
+        linked:
+          items:
+            $ref: '#/components/schemas/InstanceWithoutFederationState'
+          title: FederatedInstances.linked
+          type: array
+        allowed:
+          items:
+            $ref: '#/components/schemas/InstanceWithoutFederationState'
+          title: FederatedInstances.allowed
+          type: array
+        blocked:
+          items:
+            $ref: '#/components/schemas/InstanceWithoutFederationState'
+          title: FederatedInstances.blocked
+          type: array
+      required:
+        - linked
+        - allowed
+        - blocked
+      additionalProperties: false
+      title: FederatedInstances
+      type: object
     CommunityBlockView:
       properties:
         community:
@@ -3165,6 +3334,8 @@ components:
           title: Language.name
           type: string
           example: English
+      title: LanguageView
+      type: object
     InstanceBlockView:
       properties:
         person:
@@ -3350,9 +3521,6 @@ components:
         hidden:
           title: PostView.hidden
           type: boolean
-        creator_blocked:
-          title: PostView.creator_blocked
-          type: boolean
         my_vote:
           title: PostView.my_vote
           type: integer
@@ -3373,7 +3541,6 @@ components:
         - activityalert
         - read
         - hidden
-        - creator_blocked
         - unread_comments
       additionalProperties: false
       title: PostView
@@ -3392,9 +3559,6 @@ components:
         counts:
           $ref: '#/components/schemas/CommunityAggregates'
           title: CommunityView.counts
-        banned_from_community:
-          title: CommunityView.banned_from_community
-          type: boolean
         activity_alert:
           title: CommunityView.activity_alert
           type: boolean
@@ -3403,7 +3567,6 @@ components:
         - subscribed
         - blocked
         - counts
-        - banned_from_community
         - activity_alert
       additionalProperties: false
       title: CommunityView
@@ -4108,7 +4271,7 @@ components:
       type: object
     CommunityAggregates:
       properties:
-        community_id:
+        id:
           title: CommunityAggregates.community_id
           type: integer
         subscriptions_count:
@@ -4125,7 +4288,7 @@ components:
           type: string
           format: date-time
       required:
-        - community_id
+        - id
         - subscriptions_count
         - post_count
         - post_reply_count
