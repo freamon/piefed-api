@@ -2094,12 +2094,8 @@ components:
     GetNotificationStatus:
       properties:
         status:
+          $ref: '#/components/schemas/NotificationStatusType'
           title: GetNotificationStatus.status
-          type: string
-          enum: 
-            - All
-            - New
-            - Read
         page:
           title: GetNotificationStatus.page
           type: integer
@@ -4019,7 +4015,13 @@ components:
         - Old
       title: CommentSortType
       type: string
-    
+    NotificationStatusType:
+      type: string
+      enum: 
+        - All
+        - New
+        - Read
+      title: NotificationStatusType
     # -- aggregates --
     PersonAggregates:
       properties:
