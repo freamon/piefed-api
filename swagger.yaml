@@ -1359,9 +1359,11 @@ components:
         icon_url:
           title: CreateCommunity.icon
           type: string
+          format: url
         banner_url:
           title: CreateCommunity.banner
           type: string
+          format: url
         nsfw:
           title: CreateCommunity.nsfw
           type: boolean
@@ -1399,9 +1401,11 @@ components:
         icon_url:
           title: CreateCommunity.icon
           type: string
+          format: url
         banner_url:
           title: CreateCommunity.banner
           type: string
+          format: url
         nsfw:
           title: CreateCommunity.nsfw
           type: boolean
@@ -1618,6 +1622,7 @@ components:
         url:
           title: EditPost.url
           type: string
+          format: url
         body:
           title: EditPost.body
           type: string
@@ -1643,6 +1648,7 @@ components:
         url:
           title: CreatePost.url
           type: string
+          format: url
         body:
           title: CreatePost.body
           type: string
@@ -2550,6 +2556,7 @@ components:
         actor_id:
           title: Site.actor_id
           type: string
+          format: url
           example: https://piefed.social/
         all_languages:
           items:
@@ -2565,6 +2572,7 @@ components:
         icon:
           title: Site.icon
           type: string
+          format: url
         name:
           title: Site.name
           type: string
@@ -2593,9 +2601,11 @@ components:
         published:
           title: Instance.published
           type: string
+          format: date-time
         updated:
           title: Instance.updated
           type: string
+          format: date-time
         software:
           title: Instance.software
           type: string
@@ -2613,6 +2623,7 @@ components:
         actor_id:
           title: Community.actor_id
           type: string
+          format: url
         ap_domain:
           title: Community.ap_domain
           type: string
@@ -2622,6 +2633,7 @@ components:
         banner:
           title: Community.banner
           type: string
+          format: url
         deleted:
           title: Community.deleted
           type: boolean
@@ -2634,6 +2646,7 @@ components:
         icon:
           title: Community.icon
           type: string
+          format: url
         id:
           title: Community.id
           type: integer
@@ -2652,6 +2665,7 @@ components:
         published:
           title: Community.published
           type: string
+          format: date-time
         removed:
           title: Community.removed
           type: boolean
@@ -2664,6 +2678,7 @@ components:
         updated:
           title: Community.updated
           type: string
+          format: date-time
       required:
         - id
         - name
@@ -2690,6 +2705,7 @@ components:
         url:
           title: Post.url
           type: string
+          format: url
         body:
           title: Post.body
           type: string
@@ -2708,9 +2724,11 @@ components:
         published:
           title: Post.published
           type: string
+          format: date-time
         updated:
           title: Post.updated
           type: string
+          format: date-time
         deleted:
           title: Post.deleted
           type: boolean
@@ -2720,9 +2738,11 @@ components:
         thumbnail_url:
           title: Post.thumbnail_url
           type: string
+          format: url
         ap_id:
           title: Post.ap_id
           type: string
+          format: url
         local:
           title: Post.local
           type: boolean
@@ -2784,9 +2804,11 @@ components:
         published:
           title: PostReport.published
           type: string
+          format: date-time
         updated:
           title: PostReport.updated
           type: string
+          format: date-time
       required:
         - id
         - creator_id
@@ -2818,15 +2840,18 @@ components:
         published:
           title: Comment.published
           type: string
+          format: date-time
         updated:
           title: Comment.updated
           type: string
+          format: date-time
         deleted:
           title: Comment.deleted
           type: boolean
         ap_id:
           title: Comment.ap_id
           type: string
+          format: url
         local:
           title: Comment.local
           type: boolean
@@ -2872,6 +2897,7 @@ components:
         published:
           title: CommentReply.published
           type: string
+          format: date-time
       required:
         - id
         - recipient_id
@@ -2907,9 +2933,11 @@ components:
         published:
           title: CommentReport.published
           type: string
+          format: date-time
         updated:
           title: CommentReport.updated
           type: string
+          format: date-time
       required:
         - id
         - creator_id
@@ -2944,12 +2972,15 @@ components:
         published:
           title: PrivateMessage.published
           type: string
+          format: date-time
         updated:
           title: PrivateMessage.updated
           type: string
+          format: date-time
         ap_id:
           title: PrivateMessage.ap_id
           type: string
+          format: url
         local:
           title: PrivateMessage.local
           type: boolean
@@ -2971,15 +3002,18 @@ components:
         actor_id:
           title: Person.actor_id
           type: string
+          format: url
         avatar:
           title: Person.avatar
           type: string
+          format: url
         banned:
           title: Person.banned
           type: boolean
         banner:
           title: Person.banner
           type: string
+          format: url
         bot:
           title: Person.bot
           type: boolean
@@ -2998,6 +3032,7 @@ components:
         published:
           title: Person.published
           type: string
+          format: date-time
         title:
           title: Person.title
           type: string
@@ -4020,6 +4055,7 @@ components:
         published:
           title: CommentAggregates.published
           type: string
+          format: date-time
         child_count:
           title: CommentAggregates.child_count
           type: integer
@@ -4053,6 +4089,7 @@ components:
         published:
           title: PostAggregates.published
           type: string
+          format: date-time
         newest_comment_time:
           title: PostAggregates.newest_comment_time
           type: string
@@ -4084,6 +4121,7 @@ components:
         published:
           title: CommunityAggregates.published
           type: string
+          format: date-time
       required:
         - community_id
         - subscriptions_count
