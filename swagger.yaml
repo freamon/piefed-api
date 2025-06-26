@@ -1677,6 +1677,9 @@ components:
         liked_only:
           title: GetPosts.liked_only
           type: boolean
+        saved_only:
+          title: GetPosts.saved_only
+          type: boolean
       additionalProperties: false
       title: GetPosts
       type: object
@@ -1939,6 +1942,12 @@ components:
         person_id:
           title: GetComments.person_id
           type: integer
+        liked_only:
+          title: GetComments.liked_only
+          type: boolean
+        saved_only:
+          title: GetComments.saved_only
+          type: boolean
       additionalProperties: false
       title: GetComments
       type: object
