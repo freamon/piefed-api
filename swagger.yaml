@@ -684,6 +684,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequest'
       summary: A moderator can feature a community post ( IE stick it to the top of a community ).
+  /post/mark_as_read:
+    post:
+      tags:
+        - Post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarkPostAsRead'
+      responses:
+        '200':
+          description: OK
+      summary: Mark a post as read.
   /post/remove:
     post:
       tags:
@@ -1848,6 +1861,25 @@ components:
         - feature_type
       additionalProperties: false
       title: FeaturePost
+      type: object
+    MarkPostAsRead:
+      properties:
+        post_ids:
+          items:
+            title: Post.id
+            type: integer
+          title: MarkPostAsRead.post_ids
+          type: array
+        post_id:
+          title: MarkPostAsRead.post.id
+          type: integer
+        read:
+          title: MarkPostAsRead.read
+          type: boolean
+      required:
+        - read
+      additionalProperties: false
+      title: MarkPostAsRead
       type: object
     RemovePost:
       properties:
