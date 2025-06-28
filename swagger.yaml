@@ -979,6 +979,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequest'
       summary: Get / fetch private messages.
+  /private_message:
+    post:
+      tags:
+        - PrivateMessage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePrivateMessage'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateMessageResponse'
+      summary: Create a private message.
   
   /user:
     get:
@@ -2088,6 +2105,20 @@ components:
       additionalProperties: false
       title: GetPrivateMessages
       type: object
+    CreatePrivateMessage:
+      properties:
+        content:
+          title: CreatePrivateMessage.content
+          type: string
+        recipient_id:
+          title: CreatePrivateMessage.recipient_id
+          type: integer
+      required:
+        - content
+        - recipient_id
+      additionalProperties: false
+      title: CreatePrivateMessage
+      type: object
     # user
     GetPersonDetails:
       properties:
@@ -2550,6 +2581,16 @@ components:
         - private_messages
       additionalProperties: false
       title: PrivateMessagesResponse
+      type: object
+    PrivateMessageResponse:
+      properties:
+        private_message_view:
+          $ref: '#/components/schemas/PrivateMessageView'
+          title: PrivateMessageResponse.private_message_view
+      required:
+        - private_message_view
+      additionalProperties: false
+      title: PrivateMessageResponse
       type: object
     # user
     GetPersonDetailsResponse:
