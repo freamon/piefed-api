@@ -4359,6 +4359,9 @@ components:
         subscriptions_count:
           title: CommunityAggregates.subscriptions_count
           type: integer
+        total_subscriptions_count:
+          title: CommunityAggregates.total_subscriptions_count
+          type: integer
         post_count:
           title: CommunityAggregates.post_count
           type: integer
@@ -4372,6 +4375,7 @@ components:
       required:
         - id
         - subscriptions_count
+        - total_subscriptions_count
         - post_count
         - post_reply_count
         - published
