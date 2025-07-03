@@ -1918,7 +1918,7 @@ components:
     # comment
     CreateComment:
       properties:
-        content:
+        body:
           title: CreateComment.content
           type: string
         post_id:
@@ -1931,7 +1931,7 @@ components:
           title: CreateComment.language_id
           type: integer
       required:
-        - content
+        - body
         - post_id
       additionalProperties: false
       title: CreateComment
@@ -1941,7 +1941,7 @@ components:
         comment_id:
           title: EditComment.comment_id
           type: integer
-        content:
+        body:
           title: EditComment.content
           type: string
         language_id:
@@ -2071,7 +2071,7 @@ components:
         - comment_id
         - subscribe
       additionalProperties: false
-      title: SaveComment
+      title: SubscribeComment
       type: object
     CreateCommentReport:
       properties:
@@ -2238,6 +2238,7 @@ components:
           title: SaveUserSettings.bio
           type: string
       type: object
+      title: SaveUserSettings
     GetNotificationStatus:
       properties:
         status:
@@ -3237,6 +3238,9 @@ components:
           title: Person.banner
           type: string
           format: url
+        about:
+          title: Person.about
+          type: string
         bot:
           title: Person.bot
           type: boolean
@@ -3374,7 +3378,7 @@ components:
         - allowed
         - blocked
       additionalProperties: false
-      title: FederatedInstances
+      title: FederatedInstancesView
       type: object
     CommunityBlockView:
       properties:
@@ -3815,9 +3819,6 @@ components:
         creator_banned_from_community:
           title: CommentReplyView.creator_banned_from_community
           type: boolean
-        banned_from_community:
-          title: CommentReplyView.banned_from_community
-          type: boolean
         creator_is_moderator:
           title: CommentReplyView.creator_is_moderator
           type: boolean
@@ -3845,7 +3846,6 @@ components:
         - recipient
         - counts
         - creator_banned_from_community
-        - banned_from_community
         - creator_is_moderator
         - creator_is_admin
         - subscribed
