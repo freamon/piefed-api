@@ -3156,6 +3156,9 @@ components:
           title: Person.banner
           type: string
           format: url
+        about:
+          title: Person.about
+          type: string
         bot:
           title: Person.bot
           type: boolean
