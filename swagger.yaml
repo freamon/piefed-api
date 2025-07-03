@@ -2013,7 +2013,7 @@ components:
         - comment_id
         - subscribe
       additionalProperties: false
-      title: SaveComment
+      title: SubscribeComment
       type: object
     CreateCommentReport:
       properties:
@@ -2166,6 +2166,7 @@ components:
           title: SaveUserSettings.bio
           type: string
       type: object
+      title: SaveUserSettings
     GetNotificationStatus:
       properties:
         status:
@@ -3292,7 +3293,7 @@ components:
         - allowed
         - blocked
       additionalProperties: false
-      title: FederatedInstances
+      title: FederatedInstancesView
       type: object
     CommunityBlockView:
       properties:
