@@ -3737,9 +3737,6 @@ components:
         creator_banned_from_community:
           title: CommentReplyView.creator_banned_from_community
           type: boolean
-        banned_from_community:
-          title: CommentReplyView.banned_from_community
-          type: boolean
         creator_is_moderator:
           title: CommentReplyView.creator_is_moderator
           type: boolean
@@ -3767,7 +3764,6 @@ components:
         - recipient
         - counts
         - creator_banned_from_community
-        - banned_from_community
         - creator_is_moderator
         - creator_is_admin
         - subscribed
