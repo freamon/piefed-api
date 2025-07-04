@@ -844,6 +844,29 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequest'
       summary: Delete a comment.
+  /comment/mark_as_read:
+    post:
+      tags:
+        - Comment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarkReplyAsRead'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/CommentReplyResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Mark a comment reply as read.
   /comment/remove:
     post:
       tags:
@@ -2017,6 +2040,19 @@ components:
         - deleted
       additionalProperties: false
       title: DeleteComment
+      type: object
+    MarkReplyAsRead:
+      properties:
+        comment_reply_id:
+          title: MarkReplyAsRead.comment_reply_id
+          type: integer
+        read:
+          type: boolean
+      required:
+        - comment_reply_id
+        - read
+      additionalProperties: false
+      title: MarkReplyAsRead
       type: object
     RemoveComment:
       properties:
@@ -3865,6 +3901,16 @@ components:
         - creator_blocked
       additionalProperties: false
       title: CommentReplyView
+      type: object
+    CommentReplyResponse:
+      properties:
+        comment_reply_view:
+          $ref: '#/components/schemas/CommentReplyView'
+          title: CommentResponse.comment_reply_view
+      required:
+        - comment_reply_view
+      additionalProperties: false
+      title: CommentReplyResponse
       type: object
     PrivateMessageView:
       properties:
