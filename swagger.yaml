@@ -696,6 +696,10 @@ paths:
       responses:
         '200':
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/SuccessResponse'
       summary: Mark a post as read.
   /post/remove:
     post:
@@ -2277,6 +2281,14 @@ components:
       type: object
     
     # -- responses --
+    SuccessResponse:
+      properties:
+        success:
+          type: boolean
+      required:
+        - success
+      title: SuccessResponse
+      type: object
     # general error
     BadRequest:
       required:
