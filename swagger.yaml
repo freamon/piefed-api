@@ -3036,6 +3036,10 @@ components:
           title: Post.thumbnail_url
           type: string
           format: url
+        small_thumbnail_url:
+          title: Post.small_thumbnail_url
+          type: string
+          format: url
         ap_id:
           title: Post.ap_id
           type: string
