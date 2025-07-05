@@ -1072,6 +1072,30 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequest'
       summary: Get comment replies.
+  /user/mentions:
+    get:
+      tags:
+        - User
+      parameters:
+        - name: GetReplies
+          in: query
+          explode: true
+          schema:
+            $ref: '#/components/schemas/GetReplies'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRepliesResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Get mentions of your account made in comments.
   /user/block:
     post:
       tags:
