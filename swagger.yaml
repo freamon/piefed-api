@@ -4411,14 +4411,20 @@ components:
       type: object
     CommunityAggregates:
       properties:
+        active_6monthly:
+          title: CommunityAggregates.active_6monthly
+          type: integer
+        active_daily:
+          title: CommunityAggregates.active_daily
+          type: integer
+        active_monthly:
+          title: CommunityAggregates.active_monthly
+          type: integer
+        active_weekly:
+          title: CommunityAggregates.active_weekly
+          type: integer
         id:
           title: CommunityAggregates.community_id
-          type: integer
-        subscriptions_count:
-          title: CommunityAggregates.subscriptions_count
-          type: integer
-        total_subscriptions_count:
-          title: CommunityAggregates.total_subscriptions_count
           type: integer
         post_count:
           title: CommunityAggregates.post_count
@@ -4430,6 +4436,12 @@ components:
           title: CommunityAggregates.published
           type: string
           format: date-time
+        subscriptions_count:
+          title: CommunityAggregates.subscriptions_count
+          type: integer
+        total_subscriptions_count:
+          title: CommunityAggregates.total_subscriptions_count
+          type: integer
       required:
         - id
         - subscriptions_count
@@ -4437,6 +4449,10 @@ components:
         - post_count
         - post_reply_count
         - published
+        - active_6monthly
+        - active_daily
+        - active_monthly
+        - active_weekly
       additionalProperties: false
       title: CommunityAggregates
       type: object
