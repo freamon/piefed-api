@@ -2996,6 +2996,9 @@ components:
         nsfw:
           title: Community.nsfw
           type: boolean
+        posting_warning:
+          title: Community.posting_warning
+          type: string
         published:
           title: Community.published
           type: string
