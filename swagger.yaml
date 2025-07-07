@@ -1023,6 +1023,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/PrivateMessageResponse'
       summary: Create a private message.
+  /private_message/mark_as_read:
+    post:
+      tags:
+        - PrivateMessage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MarkPrivateMessageAsRead'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateMessageResponse'
+      summary: Mark a private message as read.
   
   /user:
     get:
@@ -2205,6 +2222,20 @@ components:
         - recipient_id
       additionalProperties: false
       title: CreatePrivateMessage
+      type: object
+    MarkPrivateMessageAsRead:
+      properties:
+        private_message_id:
+          title: MarkPrivateMessageAsRead.private_message_id
+          type: integer
+        read:
+          title: MarkPrivateMessageAsRead.read
+          type: boolean
+      required:
+        - private_message_id
+        - read
+      additionalProperties: false
+      title: MarkPrivateMessageAsRead
       type: object
     # user
     GetPersonDetails:
