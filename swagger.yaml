@@ -4396,6 +4396,11 @@ components:
         - TopDay
         - TopWeek
         - TopMonth
+        - TopThreeMonths
+        - TopSixMonths
+        - TopNineMonths
+        - TopYear
+        - TopAll
         - Scaled
       title: SortType
       type: string
