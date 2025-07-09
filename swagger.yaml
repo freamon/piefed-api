@@ -1006,6 +1006,29 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequest'
       summary: Get / fetch private messages.
+  /private_message/conversation:
+    get:
+      tags:
+        - PrivateMessage
+      parameters:
+        - in: query
+          name: GetPrivateMessagesConversation
+          schema:
+            $ref: '#/components/schemas/GetPrivateMessagesConversation'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateMessagesResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+      summary: Get / fetch private messages.
   /private_message:
     post:
       tags:
@@ -2203,11 +2226,24 @@ components:
         limit:
           title: GetPrivateMessages.limit
           type: integer
-        creator_id:
-          title: GetPrivateMessages.creator_id
-          type: integer
       additionalProperties: false
       title: GetPrivateMessages
+      type: object
+    GetPrivateMessagesConversation:
+      properties:
+        page:
+          title: GetPrivateMessagesConversation.page
+          type: integer
+        limit:
+          title: GetPrivateMessagesConversation.limit
+          type: integer
+        person_id:
+          title: GetPrivateMessagesConversation.person_id
+          type: integer
+      required:
+        - person_id
+      additionalProperties: false
+      title: GetPrivateMessagesConversation
       type: object
     CreatePrivateMessage:
       properties:
