@@ -4097,6 +4097,13 @@ components:
           title: CommunityModerationBanItem.expired
           type: boolean
           example: false
+      required:
+        - reason
+        - expiredAt
+        - community
+        - bannedUser
+        - bannedBy
+        - expired
     NotificationsCountsView:
       properties:
         new_notifications:
