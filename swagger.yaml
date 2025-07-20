@@ -3946,7 +3946,7 @@ components:
         community: 
           title: CommunityModerationBanItem.community
           type: object
-          $ref: '#/components/schemas/CommunityView'
+          $ref: '#/components/schemas/Community'
         bannedUser:
           title: CommunityModerationBanItem.bannedUser
           type: object 
