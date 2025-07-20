@@ -2793,6 +2793,7 @@ components:
       properties:
         url:
           type: string
+          format: url
           example: https://preferred.social/static/media/image.png
       type: object
     
