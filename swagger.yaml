@@ -1788,15 +1788,15 @@ components:
           title: PostCommunityModerateBan.reason
           type: string
           example: "Violation of Rule 1."
-        expiredAt: 
-          title: PostCommunityModerateBan.expiredAt
+        expired_at: 
+          title: PostCommunityModerateBan.expired_at
           type: string
           example: "2025-01-01T12:00:00"
       required:
         - community_id
         - user_id
         - reason 
-        - expiredAt
+        - expired_at
     ModerateCommunityUnBan:
       title: ModerateCommunityUnBan
       type: object
@@ -4129,20 +4129,20 @@ components:
           title: CommunityModerationBanItem.reason
           type: string
           example: "Violation of Rule 4"
-        expiredAt:
-          title: CommunityModerationBanItem.expiredAt
+        expired_at:
+          title: CommunityModerationBanItem.expired_at
           type: string
           example: "2042-01-01T12:00:00"
         community: 
           title: CommunityModerationBanItem.community
           type: object
           $ref: '#/components/schemas/Community'
-        bannedUser:
-          title: CommunityModerationBanItem.bannedUser
+        banned_user:
+          title: CommunityModerationBanItem.banned_user
           type: object 
           $ref: '#/components/schemas/Person'
-        bannedBy:
-          title: CommunityModerationBanItem.bannedBy
+        banned_by:
+          title: CommunityModerationBanItem.banned_by
           type: object 
           $ref: '#/components/schemas/Person'
         expired: 
@@ -4151,10 +4151,10 @@ components:
           example: false
       required:
         - reason
-        - expiredAt
+        - expired_at
         - community
-        - bannedUser
-        - bannedBy
+        - banned_user
+        - banned_by
         - expired
     NotificationsCountsView:
       properties:
