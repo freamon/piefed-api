@@ -3738,20 +3738,11 @@ components:
         saved:
           title: PostReportView.saved
           type: boolean
-        read:
-          title: PostReportView.read
-          type: boolean
-        hidden:
-          title: PostReportView.hidden
-          type: boolean
         creator_blocked:
           title: PostReportView.creator_blocked
           type: boolean
         my_vote:
           title: PostReportView.my_vote
-          type: integer
-        unread_comments:
-          title: PostReportView.unread_comments
           type: integer
         counts:
           $ref: '#/components/schemas/PostAggregates'
