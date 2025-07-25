@@ -2921,6 +2921,7 @@ components:
       properties:
         url:
           type: string
+          format: url
           example: https://preferred.social/static/media/image.png
       type: object
     
@@ -3875,20 +3876,11 @@ components:
         saved:
           title: PostReportView.saved
           type: boolean
-        read:
-          title: PostReportView.read
-          type: boolean
-        hidden:
-          title: PostReportView.hidden
-          type: boolean
         creator_blocked:
           title: PostReportView.creator_blocked
           type: boolean
         my_vote:
           title: PostReportView.my_vote
-          type: integer
-        unread_comments:
-          title: PostReportView.unread_comments
           type: integer
         counts:
           $ref: '#/components/schemas/PostAggregates'
@@ -4083,7 +4075,7 @@ components:
         community: 
           title: CommunityModerationBanItem.community
           type: object
-          $ref: '#/components/schemas/CommunityView'
+          $ref: '#/components/schemas/Community'
         bannedUser:
           title: CommunityModerationBanItem.bannedUser
           type: object 
@@ -4096,6 +4088,13 @@ components:
           title: CommunityModerationBanItem.expired
           type: boolean
           example: false
+      required:
+        - reason
+        - expiredAt
+        - community
+        - bannedUser
+        - bannedBy
+        - expired
     NotificationsCountsView:
       properties:
         new_notifications:
