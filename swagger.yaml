@@ -1079,6 +1079,23 @@ paths:
               schema:
                 $ref: '#/components/schemas/PrivateMessageResponse'
       summary: Mark a private message as read.
+  /private_message/delete:
+    post:
+      tags:
+        - PrivateMessage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DeletePrivateMessage'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrivateMessageResponse'
+      summary: Delete a private message.
   
   /user:
     get:
@@ -2302,6 +2319,20 @@ components:
         - read
       additionalProperties: false
       title: MarkPrivateMessageAsRead
+      type: object
+    DeletePrivateMessage:
+      properties:
+        private_message_id:
+          title: DeletePrivateMessage.private_message_id
+          type: integer
+        deleted:
+          title: DeletePrivateMessage.deleted
+          type: boolean
+      required:
+        - private_message_id
+        - deleted
+      additionalProperties: false
+      title: DeletePrivateMessage
       type: object
     # user
     GetPersonDetails:
