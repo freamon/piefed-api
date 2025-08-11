@@ -2322,14 +2322,14 @@ components:
       type: object
     DeletePrivateMessage:
       properties:
-        private_message_id:
-          title: DeletePrivateMessage.private_message_id
+        message_id:
+          title: DeletePrivateMessage.message_id
           type: integer
         deleted:
           title: DeletePrivateMessage.deleted
           type: boolean
       required:
-        - private_message_id
+        - message_id
         - deleted
       additionalProperties: false
       title: DeletePrivateMessage
@@ -3017,6 +3017,9 @@ components:
           title: Site.registration_mode
         sidebar:
           title: Site.sidebar
+          type: string
+        sidebar_md:
+          title: Site.sidebar_md
           type: string
         user_count:
           title: Site.user_count
