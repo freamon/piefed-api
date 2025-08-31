@@ -14,6 +14,7 @@ info:
     url: https://github.com/freamon/piefed-api
 
 servers:
+  - url: https://crust.piefed.social/api/alpha
   - url: https://piefed.social/api/alpha
   - url: https://feddit.online/api/alpha
   - url: https://preferred.social/api/alpha
@@ -41,6 +42,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BadRequest'
+  /site/version:
+    get:
+      responses:
+        '400':
+          description: Bad Request,
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '200':
+          description: OK,
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSiteVersionResponse'
+      tags:
+        - Site
+      summary: (instances running PieFed v1.2 or later only) Gets version of PieFed.
   /site/block:
     post:
       tags:
@@ -64,7 +83,48 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequest'
       summary: Block an instance.
-  
+  /site/instance_chooser: 
+    get: 
+      responses: 
+        '400': 
+          description: Bad Request
+          content: 
+            application/json: 
+              schema: 
+                $ref: '#/components/schemas/BadRequest'
+        '200': 
+          description: OK
+          content: 
+            application/json: 
+              schema: 
+                $ref: '#/components/schemas/GetSiteInstanceChooserResponse'
+      tags:
+        - Site
+      summary: (instances running PieFed v1.2 or later only) Gets the site info for use by other instances in the Instance Chooser functionality.
+  /site/instance_chooser_search: 
+    get: 
+      parameters:
+        - name: InstanceChooserSearch
+          in: query
+          schema:
+            $ref: '#/components/schemas/InstanceChooserSearch'
+      responses: 
+        '400': 
+          description: Bad Request
+          content: 
+            application/json: 
+              schema: 
+                $ref: '#/components/schemas/BadRequest'
+        '200': 
+          description: OK
+          content: 
+            application/json: 
+              schema: 
+                $ref: '#/components/schemas/GetSiteInstanceChooserSearchResponse'
+      tags:
+        - Site
+      summary: (instances running PieFed v1.2 or later only) Search for other instances.
+    
   /search:
     get:
       tags:
@@ -1409,6 +1469,54 @@ paths:
         '400':
           description: BAD REQUEST
       summary: Verify username / password credentials
+
+  /feed/list: 
+    get: 
+      parameters:
+        - name: FeedList
+          in: query
+          schema:
+            $ref: '#/components/schemas/FeedList'
+      responses: 
+        '400': 
+          description: Bad Request
+          content: 
+            application/json: 
+              schema: 
+                $ref: '#/components/schemas/BadRequest'
+        '200': 
+          description: OK
+          content: 
+            application/json: 
+              schema: 
+                $ref: '#/components/schemas/FeedListResponse'
+      tags: 
+        - Feed
+      summary: Get list of feeds
+    
+  /topic/list: 
+    get: 
+      parameters:
+        - name: TopicList
+          in: query
+          schema:
+            $ref: '#/components/schemas/TopicList'
+      responses: 
+        '400': 
+          description: Bad Request
+          content: 
+            application/json: 
+              schema: 
+                $ref: '#/components/schemas/BadRequest'
+        '200': 
+          description: OK
+          content: 
+            application/json: 
+              schema: 
+                $ref: '#/components/schemas/TopicListResponse'
+      tags: 
+        - Topic
+      summary: Get list of topics
   
   /upload/image:
     post:
@@ -1533,6 +1641,27 @@ components:
         - block
       title: BlockInstance
       type: object
+    InstanceChooserSearch:
+      properties:
+        q:
+          title: InstanceChooserSearch.q
+          type: string
+        nsfw:
+          title: InstanceChooserSearch.nsfw
+          type: string
+          example: 'no'
+        language:
+          title: InstanceChooserSearch.language
+          type: string
+          example: 'en'
+        newbie:
+          title: InstanceChooserSearch.newbie
+          type: string
+          example: 'yes'
+      additionalProperties: false
+      title: InstanceChooserSearch
+      type: object
+    
     # misc
     Search:
       properties:
@@ -1569,6 +1698,7 @@ components:
       additionalProperties: false
       title: ResolveObject
       type: object
+    
     # community
     GetCommunity:
       properties:
@@ -2495,6 +2625,28 @@ components:
       additionalProperties: false
       title: EditNotificationState
       type: object
+    FeedList:
+      properties:
+        include_communities:
+          title: FeedList.include_communities
+          type: boolean
+          description: include list of communities in each feed with result
+        mine_only:
+          title: FeedList.mine_only
+          type: boolean
+          description: only return feeds created by the authorized user
+      additionalProperties: false
+      title: FeedList
+      type: object
+    TopicList:
+      properties:
+        include_communities:
+          title: TopicList.include_communities
+          type: boolean
+          description: include list of communities in each topic with result
+      additionalProperties: false
+      title: TopicList
+      type: object
     # upload
     ImageUpload:
       required:
@@ -2546,6 +2698,15 @@ components:
         - admins
       title: GetSiteResponse
       type: object
+    GetSiteVersionResponse:
+      properties:
+        version: 
+          title: GetSiteVersionResponse.version
+          type: string
+      required:
+        - version
+      title: GetSiteVersionResponse
+      type: object
     BlockInstanceResponse:
       properties:
         blocked:
@@ -2555,6 +2716,88 @@ components:
         - blocked
       title: BlockInstanceResponse
       type: object
+    GetSiteInstanceChooserResponse: 
+      properties: 
+        language: 
+          $ref: '#/components/schemas/LanguageView'
+        nsfw:
+          title: GetSiteInstanceChooserResponse.nsfw
+          type: boolean
+        newbie_friendly:
+          title: GetSiteInstanceChooserResponse.newbie_friendly
+          type: boolean
+        name: 
+          title: GetSiteInstanceChooserResponse.name
+          type: string
+        elevator_pitch:
+          title: GetSiteInstanceChooserResponse.elevator_pitch
+          type: string
+        description:
+          title: GetSiteInstanceChooserResponse.description
+          type: string
+        about: 
+          title: GetSiteInstanceChooserResponse.about
+          type: string
+        sidebar: 
+          title: GetSiteInstanceChooserResponse.sidebar
+          type: string
+        logo_url: 
+          title: GetSiteInstanceChooserResponse.logo_url
+          type: string
+        maturity: 
+          title: GetSiteInstanceChooserResponse.majority
+          type: string
+        tos_url: 
+          title: GetSiteInstanceChooserResponse.tos_url
+          type: string
+        mau: 
+          title: GetSiteInstanceChooserResponse.mau
+          type: integer
+        can_make_communities:
+          title: GetSiteInstanceChooserResponse.can_make_communities
+          type: boolean
+        defederation: 
+          title: GetSiteInstanceChooserResponse.defederation
+          type: array
+          items: 
+            type: string
+        trusts: 
+          title: GetSiteInstanceChooserResponse.trusts
+          type: array
+          items: 
+            type: string
+        registration_mode:
+          title: GetSiteInstanceChooserResponse.registration_mode
+          type: string
+      required:
+        - about
+        - can_make_communities
+        - defederation
+        - description
+        - elevator_pitch
+        - language
+        - logo_url
+        - maturity
+        - mau
+        - name
+        - newbie_friendly
+        - nsfw
+        - registration_mode
+        - sidebar
+        - tos_url
+        - trusts
+      type: object
+    
+    GetSiteInstanceChooserSearchResponse: 
+      properties: 
+        result: 
+          type: array
+          items: 
+            $ref: '#/components/schemas/GetSiteInstanceChooserSearchResponseItem'
+      required:
+        - result
+      type: object
+    
     # misc
     SearchResponse:
       properties:
@@ -2974,6 +3217,25 @@ components:
           title: NotificationsMarkAllReadResponse.mark_all_notifications_as_read
           type: string
           example: complete
+    FeedListResponse: 
+      properties: 
+        feeds: 
+          type: array
+          items: 
+            $ref: '#/components/schemas/FeedView'
+      required: 
+        - feeds
+      type: object
+    TopicListResponse: 
+      properties: 
+        topics: 
+          title: TopicListResponse.topics
+          type: array
+          items: 
+            $ref: '#/components/schemas/TopicView'
+      required: 
+        - topics
+      type: object
     
     # upload
     UploadResponse:
@@ -3604,6 +3866,90 @@ components:
     
     # -- views --
     
+    GetSiteInstanceChooserSearchResponseItem: 
+      properties: 
+        id: 
+          title: GetSiteInstanceChooserSearchResponseItem.id
+          type: integer
+        name: 
+          title: GetSiteInstanceChooserSearchResponseItem.name
+          type: string
+        domain: 
+          title: GetSiteInstanceChooserSearchResponseItem.domain
+          type: string
+        elevator_pitch: 
+          title: GetSiteInstanceChooserSearchResponseItem.elevator_pitch
+          type: string
+        description: 
+          title: GetSiteInstanceChooserSearchResponseItem.description
+          type: string
+        about: 
+          title: GetSiteInstanceChooserSearchResponseItem.about
+          type: string
+        sidebar: 
+          title: GetSiteInstanceChooserSearchResponseItem.sidebar
+          type: string
+        logo_url: 
+          title: GetSiteInstanceChooserSearchResponseItem.logo_url
+          type: string
+        maturity: 
+          title: GetSiteInstanceChooserSearchResponseItem.maturity
+          type: string
+        tos_url: 
+          title: GetSiteInstanceChooserSearchResponseItem.tos_url
+          type: string
+        uptime: 
+          title: GetSiteInstanceChooserSearchResponseItem.uptime
+          type: string
+        mau: 
+          title: GetSiteInstanceChooserSearchResponseItem.mau
+          type: integer
+        can_make_communities: 
+          title: GetSiteInstanceChooserSearchResponseItem.can_make_communities
+          type: boolean
+        newbie_friendly: 
+          title: GetSiteInstanceChooserSearchResponseItem.newbie_friendly
+          type: boolean
+        defederation: 
+          title: GetSiteInstanceChooserSearchResponseItem.defederation
+          type: array
+          items: 
+            type: string
+        trusts: 
+          title: GetSiteInstanceChooserSearchResponseItem.trusts
+          type: array
+          items: 
+            type: string
+        registration_mode: 
+          title: GetSiteInstanceChooserSearchResponseItem.registration_mode
+          type: string
+        language: 
+          title: GetSiteInstanceChooserSearchResponseItem.language
+          type: string
+        monthsmonitored: 
+          title: GetSiteInstanceChooserSearchResponseItem.monthsmonitored
+          type: integer
+      required:
+        - about
+        - can_make_communities
+        - defederation
+        - description
+        - domain
+        - elevator_pitch
+        - id
+        - language
+        - logo_url
+        - maturity
+        - mau
+        - monthsmonitored
+        - name
+        - newbie_friendly
+        - registration_mode
+        - sidebar
+        - tos_url
+        - trusts
+        - uptime
+      type: object
     FederatedInstancesView:
       properties:
         linked:
@@ -4448,6 +4794,159 @@ components:
           type: string
           example: "This is the body of a comment."
       title: NotificationsItemCommentMentionView
+      type: object
+    FeedView: 
+      properties: 
+        actor_id:
+          title: FeedView.actor_id         
+          type: string
+          format: url
+        ap_domain:
+          title: FeedView.ap_domain        
+          type: string
+        children: 
+          title: FeedView.children
+          type: array
+          items: 
+            $ref: '#/components/schemas/FeedView'
+        communities: 
+          title: FeedView.communities
+          type: array
+          items: 
+            $ref: '#/components/schemas/Community'
+        communities_count: 
+          title: FeedView.communities_count
+          type: integer
+        id: 
+          title: FeedView.id
+          type: integer
+        is_instance_feed: 
+          title: FeedView.is_instance_feed
+          type: boolean
+        local: 
+          title: FeedView.local
+          type: boolean
+        name: 
+          title: FeedView.name
+          type: string
+        nsfl: 
+          title: FeedView.nsfl
+          type: boolean
+        nsfw: 
+          title: FeedView.nsfw
+          type: boolean
+        owner: 
+          title: FeedView.owner
+          type: boolean
+          description: Is the authorized user the creator of the feed?
+        public: 
+          title: FeedView.public
+          type: boolean
+        published: 
+          title: FeedView.published
+          type: string
+          example: 2025-06-07T02:29:07.980084Z
+          format: datetime
+        show_posts_from_children: 
+          title: FeedView.show_posts_from_children
+          type: boolean
+        subscribed: 
+          title: FeedView.subscribed
+          type: boolean
+        subscriptions_count: 
+          title: FeedView.subscriptions_count
+          type: integer
+        title: 
+          title: FeedView.title
+          type: string
+        updated: 
+          title: FeedView.updated
+          type: string
+          example: 2025-06-07T02:29:07.980084Z
+          format: datetime
+        user_id: 
+          title: FeedView.user_id
+          type: integer
+          description: user_id of the feed creator/owner
+        banner: 
+          title: FeedView.banner
+          type: string
+          format: url
+        description:
+          title: FeedView.description
+          type: string
+          format: markdown
+        description_html: 
+          title: FeedView.description_html
+          type: string
+          format: html
+        icon:
+          title: FeedView.icon
+          type: string
+          format: url
+        parent_feed_id: 
+          title: FeedView.parent_feed_id
+          type: integer
+      required: 
+        - actor_id
+        - ap_domain
+        - children
+        - communities
+        - communities_count
+        - id
+        - is_instance_feed
+        - local
+        - name
+        - nsfl
+        - nsfw
+        - owner
+        - public
+        - published
+        - show_posts_from_children
+        - subscribed
+        - subscriptions_count
+        - title
+        - updated
+        - user_id
+      type: object
+    TopicView: 
+      properties: 
+        children:
+          title: TopicView.children
+          type: array
+          items: 
+            $ref: '#/components/schemas/TopicView'
+        communities:
+          title: TopicView.communities 
+          type: array
+          items: 
+            $ref: '#/components/schemas/Community'
+        communities_count:
+          title: TopicView.communities_count 
+          type: integer
+        id: 
+          title: TopicView.id
+          type: integer
+        name: 
+          title: TopicView.name
+          type: string
+        show_posts_from_children: 
+          title: TopicView.show_posts_from_children
+          type: boolean
+        title: 
+          title: TopicView.title
+          type: string
+        parent_topic_id: 
+          title: TopicView.parent_topic_id
+          type: integer
+      required: 
+        - children
+        - communities
+        - communities_count
+        - id
+        - name
+        - show_posts_from_children
+        - title
       type: object
     
     # -- enums --
